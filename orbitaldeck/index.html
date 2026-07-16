@@ -69,14 +69,19 @@
       font-size: 1.08rem;
       line-height: 1.7;
     }
-    .privacy {
-      display: inline-block;
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px 24px;
       margin-top: 34px;
+    }
+    .links a {
+      display: inline-block;
       color: var(--white);
       text-underline-offset: 5px;
     }
-    .privacy:hover,
-    .privacy:focus-visible { color: var(--signal); }
+    .links a:hover,
+    .links a:focus-visible { color: var(--signal); }
     footer {
       padding-top: 20px;
       padding-bottom: 26px;
@@ -108,7 +113,10 @@
       <p class="label">Music utility / iPhone</p>
       <h1 id="orbitaldeck-title">OrbitalDeck</h1>
       <p class="description">OrbitalDeck is a focused iPhone companion that listens to nearby music, estimates its tempo, and sends MIDI Clock to connected performance devices. Manual tempo control is available when a fixed BPM is preferred. Microphone analysis happens on the device; the app does not record or upload microphone audio.</p>
-      <a class="privacy" href="/orbitaldeck/privacy/">Privacy Statement</a>
+      <nav class="links" aria-label="OrbitalDeck information">
+        <a href="/orbitaldeck/support/">Support</a>
+        <a href="/orbitaldeck/privacy/">Privacy Statement</a>
+      </nav>
     </section>
   </main>
 
