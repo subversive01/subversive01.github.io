@@ -32,7 +32,7 @@
       width: calc(100vw - var(--cover-gutter-total));
       min-height: 0;
       height: auto;
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 8 / 5;
       margin: 0 auto;
       overflow: hidden;
       border-bottom: 1px solid var(--line);
@@ -49,12 +49,13 @@
     }
     .hero-art {
       position: absolute;
-      inset: 0;
+      top: 0;
+      left: 0;
       z-index: -2;
       width: 100%;
-      height: 100%;
+      height: auto;
       object-fit: contain;
-      object-position: center;
+      object-position: top center;
     }
     .site-header {
       position: relative;
@@ -74,7 +75,7 @@
     .signal-mark { color: var(--signal); }
     .hero-copy {
       position: absolute;
-      bottom: clamp(38px, 6.46cqw, 124px);
+      bottom: clamp(90px, 8.5cqw, 136px);
       left: 0;
       width: 100%;
       padding: 0 clamp(20px, 3.125cqw, 60px);
@@ -103,35 +104,41 @@
       line-height: 1.55;
       text-shadow: 0 2px 12px #000;
     }
-    footer {
+    .cover-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
       display: flex;
       justify-content: space-between;
       gap: 20px;
-      width: calc(100vw - var(--cover-gutter-total));
-      margin: 0 auto;
+      width: 100%;
       padding: clamp(20px, 2.29vw, 44px) clamp(20px, 3.125vw, 60px);
-      border-top: 1px solid var(--line);
       color: #717878;
       font-size: clamp(0.68rem, 1.2vw, 1.35rem);
       text-transform: uppercase;
+      background: linear-gradient(to top, rgba(5, 5, 5, 0.72), transparent);
     }
     @media (max-width: 720px) {
       .hero {
         width: calc(100vw - 12px);
-        min-height: calc(100svh - 58px);
-        height: calc(100svh - 58px);
+        min-height: 100svh;
+        height: 100svh;
         aspect-ratio: auto;
       }
       .hero-art {
+        height: 100%;
         object-fit: cover;
         object-position: center;
       }
       .intro {
         max-width: 72cqw;
       }
-      footer {
+      .hero-copy {
+        bottom: 88px;
+      }
+      .cover-footer {
         align-items: flex-start;
-        width: calc(100vw - 12px);
         padding: 20px;
       }
     }
@@ -152,12 +159,11 @@
         <h1 id="site-title">SBHC Security</h1>
         <p class="intro">Independent software, and security projects built at the edge of sound, hardware, and art.</p>
       </div>
+      <footer class="cover-footer">
+        <span>SBHC Security</span>
+        <span>Static / no tracking</span>
+      </footer>
     </section>
   </main>
-
-  <footer>
-    <span>SBHC Security</span>
-    <span>Static / no tracking</span>
-  </footer>
 </body>
 </html>
