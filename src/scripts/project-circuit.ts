@@ -32,14 +32,14 @@ function mountProjectCircuit(host: HTMLElement, canvas: HTMLCanvasElement, seed:
   const compact = host.getBoundingClientRect().width < 720;
   const columns = compact ? 7 : 10;
   const rows = compact ? 6 : 7;
-  const startX = compact ? .18 : .42;
+  const startX = compact ? .1 : .42;
   const nodes: CircuitNode[] = [];
 
   for (let row = 0; row < rows; row += 1) {
     for (let column = 0; column < columns; column += 1) {
       if (random() < .18 && row > 0 && column > 0) continue;
       nodes.push({
-        x: startX + (column / Math.max(1, columns - 1)) * (compact ? .76 : .54),
+        x: startX + (column / Math.max(1, columns - 1)) * (compact ? .8 : .54),
         y: .16 + (row / Math.max(1, rows - 1)) * .7,
         phase: random(),
         accent: random() > .84
@@ -78,8 +78,8 @@ function mountProjectCircuit(host: HTMLElement, canvas: HTMLCanvasElement, seed:
   let running = false;
   let destroyed = false;
   let lastRenderedAt = 0;
-  let pointerX = .73;
-  let pointerY = .5;
+  let pointerX = compact ? .5 : .73;
+  let pointerY = compact ? .48 : .5;
   let targetPointerX = pointerX;
   let targetPointerY = pointerY;
   let pointerActive = false;

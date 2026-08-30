@@ -522,7 +522,7 @@ button:focus-visible {
 /* Footer */
 .site-footer { display: grid; grid-template-columns: 1fr 1.2fr auto; gap: 60px; min-height: 310px; align-items: start; padding: clamp(50px, 6vw, 100px); }
 .site-footer > div > p { max-width: 390px; margin: 28px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.65; }
-.site-footer dl { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0; }
+.site-footer dl { display: grid; grid-template-columns: repeat(2, 1fr); margin: 0; }
 .site-footer dl div { padding: 0 22px; border-left: 1px solid var(--line); }
 .site-footer dt, .site-footer dd { margin: 0; font: 650 .57rem/1.5 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
 .site-footer dt { margin-bottom: 8px; color: var(--muted); }
@@ -676,7 +676,7 @@ button:focus-visible {
   display: grid;
   grid-column: auto;
   grid-row: auto;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(2, auto);
 }
 
 .home-shell .site-footer dl div {

@@ -23,7 +23,7 @@ function mountField(host: HTMLElement, canvas: HTMLCanvasElement, seed: number):
   if (!context) throw new Error("Canvas2D is unavailable");
   const random = mulberry32(seed);
   const marks: Mark[] = Array.from({ length: 23 }, (_, index) => ({
-    x: .48 + random() * .46,
+    x: random(),
     y: .16 + random() * .68,
     length: 22 + random() * 118,
     phase: random(),
@@ -36,11 +36,15 @@ function mountField(host: HTMLElement, canvas: HTMLCanvasElement, seed: number):
   let running = false;
   let destroyed = false;
   let lastRenderedAt = 0;
+  let compact = false;
 
   function draw(now: number): void {
     if (destroyed) return;
     context.clearRect(0, 0, width, height);
-    const glow = context.createRadialGradient(width * .74, height * .5, 0, width * .74, height * .5, Math.max(width, height) * .33);
+    const fieldCenterX = compact ? .5 : .74;
+    const fieldStartX = compact ? .12 : .48;
+    const fieldEndX = compact ? .88 : .94;
+    const glow = context.createRadialGradient(width * fieldCenterX, height * .5, 0, width * fieldCenterX, height * .5, Math.max(width, height) * .33);
     glow.addColorStop(0, "rgba(255, 91, 69, .045)");
     glow.addColorStop(.4, "rgba(103, 32, 148, .055)");
     glow.addColorStop(1, "rgba(5, 5, 5, 0)");
@@ -50,8 +54,8 @@ function mountField(host: HTMLElement, canvas: HTMLCanvasElement, seed: number):
     for (let row = 0; row < 8; row += 1) {
       const y = height * (.18 + row * .09);
       context.beginPath();
-      context.moveTo(width * .48, y);
-      context.lineTo(width * .94, y);
+      context.moveTo(width * fieldStartX, y);
+      context.lineTo(width * fieldEndX, y);
       context.strokeStyle = "rgba(216, 216, 210, .055)";
       context.lineWidth = 1;
       context.stroke();
@@ -59,11 +63,11 @@ function mountField(host: HTMLElement, canvas: HTMLCanvasElement, seed: number):
 
     marks.forEach((mark, index) => {
       const drift = Math.sin(now * .00045 + mark.phase * Math.PI * 2) * 9;
-      const x = mark.x * width + drift;
+      const x = (fieldStartX + mark.x * (fieldEndX - fieldStartX)) * width + drift;
       const y = mark.y * height;
       context.beginPath();
       context.moveTo(x, y);
-      context.lineTo(Math.min(width * .96, x + mark.length), y);
+      context.lineTo(Math.min(width * (compact ? .92 : .96), x + mark.length), y);
       context.strokeStyle = mark.accent ? "rgba(255, 91, 69, .38)" : "rgba(216, 216, 210, .14)";
       context.lineWidth = mark.accent ? 1.2 : .8;
       context.stroke();
@@ -77,7 +81,7 @@ function mountField(host: HTMLElement, canvas: HTMLCanvasElement, seed: number):
     });
 
     const progress = (now * .000075) % 1;
-    const traceX = width * (.5 + progress * .43);
+    const traceX = width * ((compact ? .14 : .5) + progress * (compact ? .72 : .43));
     const traceY = height * (.37 + Math.sin(progress * Math.PI * 2) * .16);
     context.save();
     context.globalCompositeOperation = "lighter";
@@ -103,6 +107,7 @@ function mountField(host: HTMLElement, canvas: HTMLCanvasElement, seed: number):
     const rect = host.getBoundingClientRect();
     width = Math.max(1, Math.round(rect.width));
     height = Math.max(1, Math.round(rect.height));
+    compact = width < 720;
     const ratio = Math.min(window.devicePixelRatio || 1, MAX_DEVICE_PIXEL_RATIO);
     canvas.width = Math.round(width * ratio);
     canvas.height = Math.round(height * ratio);

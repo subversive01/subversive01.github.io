@@ -279,9 +279,13 @@ function mountSignalLattice(host: HTMLElement, canvas: HTMLCanvasElement, seed: 
     const rect = host.getBoundingClientRect();
     width = Math.max(1, Math.round(rect.width));
     height = Math.max(1, Math.round(rect.height));
-    latticeCenterX = width * (width < 720 ? 0.7 : 0.72);
-    latticeCenterY = height * 0.5;
-    latticeRadius = Math.max(1, Math.min(width * 0.22, height * 0.29, 250));
+    const compact = width < 720;
+    latticeCenterX = width * (compact ? 0.5 : 0.72);
+    latticeCenterY = height * (compact ? 0.48 : 0.5);
+    latticeRadius = Math.max(
+      1,
+      Math.min(width * (compact ? 0.28 : 0.22), height * (compact ? 0.19 : 0.29), compact ? 140 : 250)
+    );
     nodePoints = nodes.map((node) => ({
       x: latticeCenterX + Math.cos(node.angle) * node.distance * latticeRadius,
       y: latticeCenterY + Math.sin(node.angle) * node.distance * latticeRadius

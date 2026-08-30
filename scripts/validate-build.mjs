@@ -279,6 +279,9 @@ for (const retiredCornerLabel of [
 if (!researchHtml.includes(">Home</a>")) {
   failures.push("Primary navigation does not label the root page Home");
 }
+if ([homeHtml, daaHtml, researchHtml, projectsHtml, blogHtml, badgeHtml].some((html) => html.includes("Runtime network") || html.includes(">Disabled</dd>"))) {
+  failures.push("Retired network status footer item must not render on any page");
+}
 
 if (failures.length > 0) {
   console.error(failures.map((failure) => `- ${failure}`).join("\n"));

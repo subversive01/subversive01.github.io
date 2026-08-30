@@ -229,7 +229,11 @@ const {
   }
 
   @media (max-width: 720px) {
-    .signal-lattice { --lattice-center-x: 70%; }
+    .signal-lattice {
+      --lattice-center-x: 50%;
+      --lattice-center-y: 48%;
+      --lattice-radius: min(28cqw, 19cqh, 140px);
+    }
     .signal-lattice__hud { inset: 16px 18px auto; }
     .signal-lattice__hud span:last-child { display: none; }
   }
