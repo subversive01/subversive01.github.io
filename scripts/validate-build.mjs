@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { extname, join, relative } from "node:path";
 
@@ -11,12 +12,45 @@ const requiredFiles = [
   "research/index.html",
   "research/daa/index.html",
   "assets/blog/research-log-og.png",
+  "assets/research/daa/three-orthogonal-descriptors.png",
   "CNAME",
   ".nojekyll",
   "robots.txt",
   "sitemap.xml"
 ];
 const failures = [];
+const daaArticleSourcePath = join(root, "src/content/daa/article.md");
+const daaIntegrityPath = join(root, "scripts/daa-publication-v6.4.3.integrity.json");
+let daaIntegrity = null;
+
+function normalizedArticleBody(source) {
+  return source
+    .replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "")
+    .replace(/\r\n/g, "\n")
+    .replace(/\n*$/, "\n");
+}
+
+if (!existsSync(daaArticleSourcePath) || !existsSync(daaIntegrityPath)) {
+  failures.push("DAA canonical article source or integrity record is missing");
+} else {
+  try {
+    daaIntegrity = JSON.parse(readFileSync(daaIntegrityPath, "utf8"));
+    const articleBody = normalizedArticleBody(readFileSync(daaArticleSourcePath, "utf8"));
+    const articleBodyHash = createHash("sha256").update(articleBody).digest("hex");
+    if (articleBodyHash !== daaIntegrity.articleBodySha256) {
+      failures.push(
+        `DAA canonical body drifted from ${daaIntegrity.paperVersion}: expected ${daaIntegrity.articleBodySha256}, found ${articleBodyHash}. ` +
+        `Update the integrity record only after revalidating against canonical PDF ${daaIntegrity.canonicalPdfSha256}`
+      );
+    }
+    const mainHeadings = [...articleBody.matchAll(/^## (?!#)(.+)$/gm)].map((match) => match[1]);
+    if (JSON.stringify(mainHeadings) !== JSON.stringify(daaIntegrity.mainHeadings)) {
+      failures.push(`DAA main-heading order changed: ${JSON.stringify(mainHeadings)}`);
+    }
+  } catch (error) {
+    failures.push(`DAA integrity record could not be verified: ${error.message}`);
+  }
+}
 
 for (const file of requiredFiles) {
   if (!existsSync(join(dist, file))) failures.push(`Missing build artifact: ${file}`);
@@ -112,12 +146,16 @@ for (const file of htmlFiles) {
   }
   const externalLinks = [...html.matchAll(/\bhref="(https?:\/\/[^\"]+)"/gi)].map((match) => match[1]);
   for (const href of externalLinks) {
-    if (href.startsWith("https://sbhcsecurity.com") || href === "https://github.com/subversive01/station562-badge") continue;
+    if (
+      href.startsWith("https://sbhcsecurity.com") ||
+      href === "https://github.com/subversive01/station562-badge" ||
+      href === "https://github.com/subversive01/DAA-experimental-evaluation"
+    ) continue;
     const sourceUrl = new URL(href);
     if (sourceUrl.protocol === "https:" && publicationSourceHosts.has(sourceUrl.hostname)) continue;
     failures.push(`${name}: external navigation is not allowlisted: ${href}`);
   }
-  if (/\b(?:evidence\/|raw[_-]lock|api\.anthropic|amazonaws\.com)/i.test(html)) {
+  if (/\b(?:evidence\/|raw[_-]lock\/|api\.anthropic|amazonaws\.com)/i.test(html)) {
     failures.push(`${name}: custody or sensitive operational term leaked into publication output`);
   }
 }
@@ -203,6 +241,20 @@ const daaPaperEnd = daaHtml.indexOf('class="daa-references"');
 const daaPaperHtml = daaPaperStart >= 0 && daaPaperEnd > daaPaperStart
   ? daaHtml.slice(daaPaperStart, daaPaperEnd)
   : "";
+if (daaIntegrity) {
+  const renderedTableCount = (daaPaperHtml.match(/<table(?:\s|>)/g) ?? []).length;
+  if (renderedTableCount !== daaIntegrity.tableCount) {
+    failures.push(`DAA canonical paper must render ${daaIntegrity.tableCount} tables; found ${renderedTableCount}`);
+  }
+  const figureImageCount = [...daaPaperHtml.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/g)]
+    .filter((match) => match[1] === daaIntegrity.figurePath).length;
+  if (figureImageCount !== 1) {
+    failures.push(`DAA canonical Figure 1 must render once; found ${figureImageCount}`);
+  }
+  if (!daaPaperHtml.includes(daaIntegrity.figureCaption)) {
+    failures.push("DAA canonical Figure 1 caption is missing or changed");
+  }
+}
 const sourcesNavigationLinks = daaPaperHtml.match(/href="#sources-heading"/g) ?? [];
 if (sourcesNavigationLinks.length !== 2) {
   failures.push(`DAA desktop and mobile indexes must each link to Sources & references; found ${sourcesNavigationLinks.length}`);
@@ -212,8 +264,8 @@ for (let referenceNumber = 1; referenceNumber <= 56; referenceNumber += 1) {
 }
 const linkedPaperCitations = [...daaPaperHtml.matchAll(/data-citation="(\d+)"/g)].map((match) => Number(match[1]));
 const linkedReferenceNumbers = [...daaReferencesHtml.matchAll(/data-citation="(\d+)"/g)].map((match) => Number(match[1]));
-if (linkedPaperCitations.length !== 90) {
-  failures.push(`DAA paper must render 90 public citation links; found ${linkedPaperCitations.length}`);
+if (linkedPaperCitations.length !== 97) {
+  failures.push(`DAA paper must render 97 public citation links; found ${linkedPaperCitations.length}`);
 }
 if (linkedReferenceNumbers.length !== 47) {
   failures.push(`DAA bibliography must render 47 linked public reference numbers; found ${linkedReferenceNumbers.length}`);

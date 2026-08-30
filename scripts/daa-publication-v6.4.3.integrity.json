@@ -1,0 +1,24 @@
+{
+  "paperVersion": "Publication Paper v6.4.3",
+  "canonicalPdfSha256": "f332d88c1d4395fee4c24436c1f73b4a1c4b9b968c94bb2fbc7edbfc57c07630",
+  "articleBodySha256": "ab43d63f71f649b0840d32aa68c1f35aea61d12d5760d35a02b3b486eb8e2ac8",
+  "mainHeadings": [
+    "Abstract",
+    "1. The idea",
+    "2. Proposed definition and boundaries",
+    "3. Prior art: this idea did not appear from nowhere",
+    "4. What current evidence actually shows",
+    "5. Why large-scale distributed agency might matter",
+    "6. What could defenders observe?",
+    "7. Four scenarios worth studying",
+    "8. The infrastructure question",
+    "9. Defensive implications and distributed observability",
+    "10. Limitations and what would prove this wrong",
+    "11. Conclusion",
+    "12. Data and reproducibility statement",
+    "13. Declarations and access status"
+  ],
+  "tableCount": 6,
+  "figurePath": "/assets/research/daa/three-orthogonal-descriptors.png",
+  "figureCaption": "Figure 1. Three orthogonal descriptors. Botnet names a population-acquisition/control substrate; DDoS names a distributed traffic or request technique and service-degradation effect; proposed DAA names a campaign decision architecture. They may overlap. The figure asserts no sequence, hierarchy, or evolution."
+}

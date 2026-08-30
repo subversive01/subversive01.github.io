@@ -609,6 +609,11 @@ button:focus-visible {
   .masthead nav a { font-size: .62rem; }
 }
 
+@media (max-width: 340px) {
+  .masthead { padding: 0 8px; }
+  .masthead nav { gap: 8px; }
+}
+
 /* Single-viewport Home composition */
 .home-shell {
   display: grid;

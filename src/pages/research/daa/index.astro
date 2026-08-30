@@ -31,7 +31,7 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
           secondaryLabel="Field evidence / bounded studies"
         />
         <div class="daa-hero-copy">
-          <p class="eyebrow">Full publication paper / August 2026</p>
+          <p class="eyebrow">Publication page / August 2026</p>
           <h1 id="daa-title">Distributed<br /><span>Agentic</span> Attacks</h1>
           <p class="daa-paper-title">A Proposed Threat Model for Large-Scale Distributed Offensive Agency</p>
           <p class="daa-hook">What changes for defenders when <strong>consequential tactical decision authority is materially dispersed across distinguishable artificial decision loci?</strong></p>
@@ -52,7 +52,7 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
 
       <section class="daa-results" aria-labelledby="results-title">
         <header>
-          <p class="section-label">The result / Three separate propositions</p>
+          <p class="section-label">Page overview / Three separate propositions</p>
           <h2 id="results-title">What the evidence supports</h2>
         </header>
         <ol>
@@ -105,7 +105,7 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
         </ol>
       </section>
 
-      <article class="daa-paper" id="paper">
+      <article class="daa-paper" id="paper" aria-label="Canonical publication text, version 6.4.3">
         <div class="daa-paper-layout">
           <nav class="daa-index" aria-labelledby="daa-index-title">
             <p id="daa-index-title">In this paper</p>
@@ -128,7 +128,10 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
             </nav>
           </details>
 
-          <div class="daa-prose"><Content /></div>
+          <div class="daa-prose">
+            <span class="daa-canonical-label">Canonical publication text / Publication Paper v6.4.3</span>
+            <Content />
+          </div>
         </div>
       </article>
 
@@ -308,15 +311,16 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
   }
 
   :global(.daa-prose > *) { max-width: 760px; }
-  :global(.daa-prose > p:first-child) { max-width: 900px; color: var(--white); font: 560 clamp(1.55rem, 2.6vw, 2.55rem)/1.4 var(--sans); letter-spacing: -.025em; }
-  :global(.daa-prose h2) { max-width: 980px; margin: 2.2em 0 .72em; padding-top: .32em; scroll-margin-top: 28px; font-size: clamp(3.2rem, 5.8vw, 6.8rem); line-height: .88; letter-spacing: -.062em; }
+  .daa-canonical-label { display: block; margin-bottom: 38px; color: var(--signal); font: 700 .6rem/1.45 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+  :global(.daa-prose > p:first-of-type) { max-width: 900px; color: var(--white); font: 560 clamp(1.55rem, 2.6vw, 2.55rem)/1.4 var(--sans); letter-spacing: -.025em; }
+  :global(.daa-prose h2) { max-width: 980px; margin: 2.2em 0 .72em; padding-top: .32em; scroll-margin-top: 28px; font-size: clamp(3.2rem, 5.8vw, 6.8rem); line-height: .88; letter-spacing: -.062em; overflow-wrap: anywhere; hyphens: auto; }
   :global(.daa-prose h2::before) { display: block; width: 42px; height: 2px; margin-bottom: 22px; background: var(--signal); content: ""; }
   :global(.daa-prose h2:first-of-type) { margin-top: 1.5em; }
-  :global(.daa-prose h3) { margin: 2.4em 0 .72em; padding-top: .65em; border-top: 1px solid var(--line); scroll-margin-top: 28px; font-size: clamp(2.15rem, 3.5vw, 4rem); line-height: .96; letter-spacing: -.045em; }
-  :global(.daa-prose h4) { margin: 2.25em 0 .8em; scroll-margin-top: 28px; font-size: clamp(1.4rem, 2.2vw, 2.25rem); line-height: 1.08; letter-spacing: -.03em; }
+  :global(.daa-prose h3) { margin: 2.4em 0 .72em; padding-top: .65em; border-top: 1px solid var(--line); scroll-margin-top: 28px; font-size: clamp(2.15rem, 3.5vw, 4rem); line-height: .96; letter-spacing: -.045em; overflow-wrap: anywhere; hyphens: auto; }
+  :global(.daa-prose h4) { margin: 2.25em 0 .8em; scroll-margin-top: 28px; font-size: clamp(1.4rem, 2.2vw, 2.25rem); line-height: 1.08; letter-spacing: -.03em; overflow-wrap: anywhere; hyphens: auto; }
   :global(.daa-prose h5) { margin: 2.2em 0 .72em; scroll-margin-top: 28px; color: var(--white); font-size: clamp(1.28rem, 1.85vw, 1.75rem); line-height: 1.16; letter-spacing: -.02em; }
   :global(.daa-prose h6) { margin: 2em 0 .7em; scroll-margin-top: 28px; color: var(--signal); font: 700 .72rem/1.5 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
-  :global(.daa-prose p) { margin: 0 0 1.48em; color: var(--paper); font: 400 clamp(1.08rem, 1.3vw, 1.22rem)/1.82 Georgia, "Times New Roman", serif; }
+  :global(.daa-prose p) { margin: 0 0 1.48em; color: var(--paper); font: 400 clamp(1.08rem, 1.3vw, 1.22rem)/1.82 Georgia, "Times New Roman", serif; overflow-wrap: anywhere; }
   :global(.daa-prose strong) { color: var(--white); }
   :global(.daa-prose a) {
     color: var(--paper);
@@ -337,25 +341,61 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
   :global(.daa-prose a.citation-link:focus-visible) { color: var(--signal); }
   :global(.daa-prose code) { color: var(--white); font: .82em/1.5 var(--mono); overflow-wrap: anywhere; }
   :global(.daa-prose hr) { max-width: none; margin: clamp(72px, 9vw, 140px) 0; border: 0; border-top: 1px solid var(--line); }
+  :global(.daa-prose table) {
+    width: 100%;
+    max-width: 980px;
+    margin: 2.8rem 0 4.4rem;
+    border: 1px solid var(--line);
+    border-collapse: collapse;
+    color: var(--paper);
+  }
+  :global(.daa-prose table:has(thead th:nth-child(5))) {
+    display: block;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  :global(.daa-prose table:has(thead th:nth-child(5)) thead),
+  :global(.daa-prose table:has(thead th:nth-child(5)) tbody) {
+    display: table;
+    width: 980px;
+    table-layout: fixed;
+  }
+  :global(.daa-prose th),
+  :global(.daa-prose td) {
+    padding: 15px 17px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+  }
+  :global(.daa-prose th) {
+    color: var(--white);
+    background: var(--ink-raised);
+    font: 700 .64rem/1.45 var(--mono);
+    letter-spacing: .045em;
+    text-transform: uppercase;
+  }
+  :global(.daa-prose td) { font: 400 .98rem/1.58 Georgia, "Times New Roman", serif; }
+  :global(.daa-prose tr:last-child td) { border-bottom: 0; }
+  :global(.daa-prose th:last-child),
+  :global(.daa-prose td:last-child) { border-right: 0; }
+  :global(.daa-prose .publication-figure) { width: 100%; max-width: 980px; margin: 3.5rem 0 4.5rem; }
+  :global(.daa-prose .publication-figure-link) { display: block; border: 1px solid var(--line); background: #fff; cursor: zoom-in; }
+  :global(.daa-prose .publication-figure-link:focus-visible) { outline: 2px solid var(--signal); outline-offset: 4px; }
+  :global(.daa-prose .publication-figure img) { display: block; width: 100%; height: auto; }
+  :global(.daa-prose .publication-figure figcaption) { margin-top: 14px; color: var(--muted); font: 600 .7rem/1.6 var(--mono); }
   :global(.daa-prose ul),
   :global(.daa-prose ol) { margin: 0 0 2.4em; padding: 0; list-style: none; counter-reset: list-item; }
   :global(.daa-prose ol) { counter-reset: ordered-item; }
   :global(.daa-prose li) { position: relative; padding: 14px 10px 14px 38px; border-top: 1px solid var(--line); color: var(--paper); font: 400 clamp(1.03rem, 1.2vw, 1.16rem)/1.65 Georgia, "Times New Roman", serif; counter-increment: ordered-item; }
   :global(.daa-prose ul > li::before) { position: absolute; top: 1.25rem; left: 5px; width: 7px; height: 7px; border: 1px solid var(--signal); border-radius: 50%; content: ""; }
   :global(.daa-prose ol > li::before) { position: absolute; top: 1.05rem; left: 2px; color: var(--signal); font: 700 .58rem/1 var(--mono); content: counter(ordered-item, decimal-leading-zero); }
-  :global(.daa-prose > ul:first-of-type) { display: grid; max-width: 980px; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 58px 0 92px; border: 1px solid var(--line); }
-  :global(.daa-prose > ul:first-of-type li) { min-height: 120px; padding: 30px 34px; border: 0; }
-  :global(.daa-prose > ul:first-of-type li:nth-child(even)) { border-left: 1px solid var(--line); }
-  :global(.daa-prose > ul:first-of-type li:nth-child(n + 3)) { border-top: 1px solid var(--line); }
-  :global(.daa-prose > ul:first-of-type li::before) { display: none; }
-
   :global(.daa-prose blockquote) { max-width: 900px; margin: 54px 0 64px; padding: 30px 34px; border: 1px solid rgba(255, 91, 69, .42); border-left: 4px solid var(--signal); background: rgba(255, 91, 69, .05); }
   :global(.daa-prose blockquote p) { margin: 0 0 1em; color: var(--white); font-family: var(--sans); font-size: clamp(1.08rem, 1.5vw, 1.34rem); font-weight: 610; line-height: 1.55; }
   :global(.daa-prose blockquote p:last-child) { margin-bottom: 0; }
-  :global(.daa-prose blockquote:not(:has(ol)):not(:has(ul)):not(:has(p + p))) { width: calc(100% + 160px); max-width: 1040px; margin: clamp(92px, 11vw, 170px) 0 clamp(92px, 11vw, 170px) -80px; padding: 0 0 0 34px; border-width: 0 0 0 3px; background: transparent; }
-  :global(.daa-prose blockquote:not(:has(ol)):not(:has(ul)):not(:has(p + p)) p) { font-size: clamp(2.7rem, 5vw, 6.2rem); font-weight: 680; line-height: .95; letter-spacing: -.058em; text-wrap: balance; }
-  :global(.daa-prose blockquote:not(:has(ol)):not(:has(ul)):not(:has(p + p)) strong) { color: var(--signal); }
-  :global(.daa-prose > p:has(> strong:only-child)) { margin: 54px 0; padding: 22px 0; border-top: 1px solid var(--signal); border-bottom: 1px solid var(--signal); color: var(--signal); font-family: var(--mono); font-size: .72rem; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
+  :global(.daa-prose > p:has(> strong:only-child)) { max-width: 900px; margin: 54px 0; padding: 26px 0; border-top: 1px solid var(--signal); border-bottom: 1px solid var(--signal); font-family: var(--sans); font-size: clamp(1.22rem, 1.9vw, 1.72rem); line-height: 1.46; letter-spacing: -.02em; }
 
   .daa-references { border-bottom: 1px solid var(--line); background: var(--ink-raised); }
   .daa-references details > summary { display: flex; min-height: 240px; align-items: center; justify-content: space-between; gap: 40px; padding: 48px var(--page-pad); cursor: pointer; list-style: none; }
@@ -384,7 +424,6 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
   @media (max-width: 1100px) {
     .daa-paper-layout { grid-template-columns: minmax(220px, .24fr) minmax(0, .76fr); }
     .daa-prose { padding-right: clamp(36px, 6vw, 76px); padding-left: clamp(36px, 6vw, 76px); }
-    :global(.daa-prose blockquote:not(:has(ol)):not(:has(ul)):not(:has(p + p))) { width: calc(100% + 80px); margin-left: -40px; }
   }
 
   @media (max-width: 820px) {
@@ -425,11 +464,9 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
     .daa-prose { padding: 62px 24px 94px; border-left: 0; }
     :global(.daa-prose h2) { font-size: clamp(3rem, 14vw, 5.2rem); }
     :global(.daa-prose h3) { font-size: clamp(2rem, 9.8vw, 3.2rem); }
-    :global(.daa-prose > ul:first-of-type) { grid-template-columns: 1fr; margin: 44px 0 72px; }
-    :global(.daa-prose > ul:first-of-type li:nth-child(even)) { border-left: 0; }
-    :global(.daa-prose > ul:first-of-type li:nth-child(n + 2)) { border-top: 1px solid var(--line); }
-    :global(.daa-prose blockquote:not(:has(ol)):not(:has(ul)):not(:has(p + p))) { width: 100%; margin: 82px 0; padding-left: 22px; }
-    :global(.daa-prose blockquote:not(:has(ol)):not(:has(ul)):not(:has(p + p)) p) { font-size: clamp(2.45rem, 12vw, 4.2rem); }
+    :global(.daa-prose table) { display: block; max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; -webkit-overflow-scrolling: touch; }
+    :global(.daa-prose th),
+    :global(.daa-prose td) { min-width: 10.5rem; }
     .daa-reference-list { columns: 1; }
     .daa-references details > summary { min-height: 210px; align-items: flex-end; }
     .daa-references summary > b { align-self: flex-start; white-space: nowrap; }
@@ -445,6 +482,11 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
     .daa-results h2 { font-size: clamp(3rem, 15vw, 4.4rem); }
     .daa-references details > summary { min-height: 230px; flex-direction: column; align-items: flex-start; justify-content: center; }
     .daa-references summary > b { align-self: auto; }
+  }
+
+  @media (max-width: 340px) {
+    .daa-signal-strip span:nth-of-type(n + 2),
+    .daa-signal-strip i { display: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -486,6 +528,8 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
     :global(.daa-prose h4),
     :global(.daa-prose h5) { break-after: avoid; }
     :global(.daa-prose blockquote) { break-inside: avoid; }
+    :global(.daa-prose table) { display: table; overflow: visible; }
+    :global(.daa-prose .publication-figure) { break-inside: avoid; }
     .daa-references { background: #fff; }
     .daa-references details:not([open]) > *:not(summary) { display: block; }
     .daa-reference-list { padding: 0; columns: 1; }
