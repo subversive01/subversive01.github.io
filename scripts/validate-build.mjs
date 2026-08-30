@@ -12,7 +12,6 @@ const requiredFiles = [
   "research/index.html",
   "research/daa/index.html",
   "assets/blog/research-log-og.png",
-  "assets/research/daa/three-orthogonal-descriptors.png",
   "CNAME",
   ".nojekyll",
   "robots.txt",
@@ -54,6 +53,10 @@ if (!existsSync(daaArticleSourcePath) || !existsSync(daaIntegrityPath)) {
 
 for (const file of requiredFiles) {
   if (!existsSync(join(dist, file))) failures.push(`Missing build artifact: ${file}`);
+}
+
+if (existsSync(join(dist, "assets/research/daa/three-orthogonal-descriptors.png"))) {
+  failures.push("Legacy raster Figure 1 must not ship after the native composition replacement");
 }
 
 if (existsSync(join(dist, "orbitaldeck"))) {
@@ -259,10 +262,29 @@ if (daaIntegrity) {
   if (renderedTableCount !== daaIntegrity.tableCount) {
     failures.push(`DAA canonical paper must render ${daaIntegrity.tableCount} tables; found ${renderedTableCount}`);
   }
-  const figureImageCount = [...daaPaperHtml.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/g)]
-    .filter((match) => match[1] === daaIntegrity.figurePath).length;
-  if (figureImageCount !== 1) {
-    failures.push(`DAA canonical Figure 1 must render once; found ${figureImageCount}`);
+  const figureMarker = `data-publication-figure="${daaIntegrity.figureId}"`;
+  const figureCount = daaPaperHtml.split(figureMarker).length - 1;
+  if (figureCount !== 1) {
+    failures.push(`DAA native Figure 1 must render once; found ${figureCount}`);
+  }
+  const figureStart = daaPaperHtml.indexOf(figureMarker);
+  const figureEnd = figureStart >= 0 ? daaPaperHtml.indexOf("</figure>", figureStart) : -1;
+  const figureHtml = figureStart >= 0 && figureEnd > figureStart
+    ? daaPaperHtml.slice(figureStart, figureEnd)
+    : "";
+  if (/<img\b/.test(figureHtml)) {
+    failures.push("DAA native Figure 1 must not fall back to a raster image");
+  }
+  for (const descriptor of daaIntegrity.figureDescriptors ?? []) {
+    if (!figureHtml.includes(`<dt>${descriptor.label}</dt>`)) {
+      failures.push(`DAA Figure 1 descriptor label is missing or changed: ${descriptor.label}`);
+    }
+    if (!figureHtml.includes(`<dd>${descriptor.definition}</dd>`)) {
+      failures.push(`DAA Figure 1 descriptor definition is missing or changed: ${descriptor.label}`);
+    }
+  }
+  if (!figureHtml.includes(`<strong>${daaIntegrity.figureRuleLabel}</strong> ${daaIntegrity.figureRuleText}`)) {
+    failures.push("DAA Figure 1 orthogonality rule is missing or changed");
   }
   if (!daaPaperHtml.includes(daaIntegrity.figureCaption)) {
     failures.push("DAA canonical Figure 1 caption is missing or changed");

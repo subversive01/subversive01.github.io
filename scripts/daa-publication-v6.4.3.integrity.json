@@ -1,7 +1,7 @@
 {
   "paperVersion": "Publication Paper v6.4.3",
   "canonicalPdfSha256": "f332d88c1d4395fee4c24436c1f73b4a1c4b9b968c94bb2fbc7edbfc57c07630",
-  "articleBodySha256": "dd8be086154b1304a01659519900a284c9b27701c000049fca0ee873229ded56",
+  "articleBodySha256": "0dfdabbdf8b4fa3b24d13e6283973398b00634eec58ad3df36511bd2f654922c",
   "mainHeadings": [
     "Abstract",
     "1. The idea",
@@ -19,6 +19,22 @@
     "13. Declarations and access status"
   ],
   "tableCount": 6,
-  "figurePath": "/assets/research/daa/three-orthogonal-descriptors.png",
+  "figureId": "three-orthogonal-descriptors",
+  "figureDescriptors": [
+    {
+      "label": "BOTNET",
+      "definition": "Population acquisition and adversary control of compromised or recruited nodes"
+    },
+    {
+      "label": "DDoS",
+      "definition": "Distributed traffic or request technique that degrades service availability"
+    },
+    {
+      "label": "PROPOSED DAA",
+      "definition": "Campaign decision architecture with consequential tactical authority dispersed across decision loci"
+    }
+  ],
+  "figureRuleLabel": "Orthogonal descriptors:",
+  "figureRuleText": "they can overlap; no sequence, hierarchy, or evolution is asserted.",
   "figureCaption": "Figure 1. Three orthogonal descriptors. Botnet names a population-acquisition/control substrate; DDoS names a distributed traffic or request technique and service-degradation effect; proposed DAA names a campaign decision architecture. They may overlap. The figure asserts no sequence, hierarchy, or evolution."
 }

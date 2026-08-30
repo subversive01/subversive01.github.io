@@ -29,11 +29,23 @@ These are orthogonal descriptors, not stages in an evolution. A botnet describes
 
 The motivating scenario is not two or five agents collaborating on an intrusion. It is a campaign in which a large population of artificial attackers can independently observe local conditions, choose consequential next steps, react to defensive changes, and continue pursuing a shared offensive objective. The research question is whether that scale of distributed decision-making creates a security problem that deserves its own name.
 
-<figure class="publication-figure">
-  <a class="publication-figure-link" href="/assets/research/daa/three-orthogonal-descriptors.png" aria-label="Open Figure 1 at full size">
-    <img src="/assets/research/daa/three-orthogonal-descriptors.png" alt="Three orthogonal parallel boxes: botnet is a population acquisition and control substrate; DDoS is a distributed service-degradation technique; proposed DAA is a campaign decision architecture. They may overlap and are not a sequence." width="1800" height="560" loading="lazy" decoding="async" />
-  </a>
-  <figcaption>Figure 1. Three orthogonal descriptors. Botnet names a population-acquisition/control substrate; DDoS names a distributed traffic or request technique and service-degradation effect; proposed DAA names a campaign decision architecture. They may overlap. The figure asserts no sequence, hierarchy, or evolution.</figcaption>
+<figure class="publication-figure descriptor-figure" data-publication-figure="three-orthogonal-descriptors" aria-labelledby="figure-1-caption">
+  <dl class="descriptor-figure__grid">
+    <div>
+      <dt>BOTNET</dt>
+      <dd>Population acquisition and adversary control of compromised or recruited nodes</dd>
+    </div>
+    <div>
+      <dt>DDoS</dt>
+      <dd>Distributed traffic or request technique that degrades service availability</dd>
+    </div>
+    <div>
+      <dt>PROPOSED DAA</dt>
+      <dd>Campaign decision architecture with consequential tactical authority dispersed across decision loci</dd>
+    </div>
+  </dl>
+  <p class="descriptor-figure__rule"><strong>Orthogonal descriptors:</strong> they can overlap; no sequence, hierarchy, or evolution is asserted.</p>
+  <figcaption id="figure-1-caption">Figure 1. Three orthogonal descriptors. Botnet names a population-acquisition/control substrate; DDoS names a distributed traffic or request technique and service-degradation effect; proposed DAA names a campaign decision architecture. They may overlap. The figure asserts no sequence, hierarchy, or evolution.</figcaption>
 </figure>
 
 ## 2. Proposed definition and boundaries
