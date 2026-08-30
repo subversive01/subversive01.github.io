@@ -238,9 +238,22 @@ const daaReferencesPosition = daaHtml.indexOf('class="daa-reference-list"');
 const daaReferencesHtml = daaReferencesPosition >= 0 ? daaHtml.slice(daaReferencesPosition) : "";
 const daaPaperStart = daaHtml.indexOf('class="daa-paper"');
 const daaPaperEnd = daaHtml.indexOf('class="daa-references"');
+const daaArtifactsPosition = daaHtml.indexOf('class="daa-artifacts"');
 const daaPaperHtml = daaPaperStart >= 0 && daaPaperEnd > daaPaperStart
   ? daaHtml.slice(daaPaperStart, daaPaperEnd)
   : "";
+if (!daaHtml.includes('class="button button-primary" href="#abstract"')) {
+  failures.push("DAA primary reading action must lead directly to the Abstract");
+}
+if (daaArtifactsPosition < daaPaperEnd) {
+  failures.push("DAA Zenodo artifacts must follow the paper instead of delaying the Abstract");
+}
+if (!daaPaperHtml.includes('<details class="publication-context">')) {
+  failures.push("DAA publication details must remain available in the compact disclosure");
+}
+if (daaPaperHtml.includes('<details class="publication-context" open')) {
+  failures.push("DAA publication details must be collapsed by default");
+}
 if (daaIntegrity) {
   const renderedTableCount = (daaPaperHtml.match(/<table(?:\s|>)/g) ?? []).length;
   if (renderedTableCount !== daaIntegrity.tableCount) {

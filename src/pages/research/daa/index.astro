@@ -32,10 +32,13 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
         />
         <div class="daa-hero-copy">
           <p class="eyebrow">Publication page / August 2026</p>
-          <h1 id="daa-title">Distributed<br /><span>Agentic</span> Attacks</h1>
+          <h1 id="daa-title">
+            <span class="daa-title-word">Distributed</span>
+            <span class="daa-title-row"><span class="daa-title-outline">Agentic</span><span class="daa-title-word">Attacks</span></span>
+          </h1>
           <p class="daa-paper-title">A Proposed Threat Model for Large-Scale Distributed Offensive Agency</p>
           <p class="daa-hook">What changes for defenders when <strong>consequential tactical decision authority is materially dispersed across distinguishable artificial decision loci?</strong></p>
-          <a class="button button-primary" href="#paper">Read the research <span aria-hidden="true">↓</span></a>
+          <a class="button button-primary" href="#abstract">Read the research <span aria-hidden="true">↓</span></a>
         </div>
         <dl class="daa-hero-meta" aria-label="Publication details">
           <div><dt>Author</dt><dd>Mario Oliva</dd></div>
@@ -60,6 +63,45 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
           <li><span>02</span><strong>Scaled load observed</strong><p>Demonstrated as architecture-neutral queue mechanics.</p></li>
           <li><span>03</span><strong>Distributed burden premium</strong><p>Not supported under the registered analyses.</p></li>
         </ol>
+      </section>
+
+      <article class="daa-paper" id="paper" aria-label="Canonical publication text, version 6.4.3">
+        <div class="daa-paper-layout">
+          <nav class="daa-index" aria-labelledby="daa-index-title">
+            <p id="daa-index-title">In this paper</p>
+            <span>{sections.length} sections / 48 min</span>
+            <ol>
+              {sections.map((heading, index) => (
+                <li><a href={`#${heading.slug}`}><b>{String(index + 1).padStart(2, "0")}</b>{heading.text}</a></li>
+              ))}
+              <li><a href="#sources-heading"><b>REF</b>Sources &amp; references</a></li>
+            </ol>
+          </nav>
+
+          <details class="daa-mobile-index">
+            <summary><span>In this paper</span><b>{sections.length} sections</b></summary>
+            <nav aria-label="Publication sections">
+              <ol>
+                {sections.map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}
+                <li><a href="#sources-heading">Sources &amp; references</a></li>
+              </ol>
+            </nav>
+          </details>
+
+          <div class="daa-prose">
+            <Content />
+          </div>
+        </div>
+      </article>
+
+      <section class="daa-references" aria-labelledby="sources-heading">
+        <details>
+          <summary>
+            <span><small>Research record / Complete bibliography</small><strong id="sources-heading">Sources &amp; references</strong></span>
+            <b>56 sources <i aria-hidden="true">＋</i></b>
+          </summary>
+          <div class="daa-reference-list"><References /></div>
+        </details>
       </section>
 
       <section class="daa-artifacts" aria-labelledby="artifacts-title">
@@ -105,46 +147,6 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
         </ol>
       </section>
 
-      <article class="daa-paper" id="paper" aria-label="Canonical publication text, version 6.4.3">
-        <div class="daa-paper-layout">
-          <nav class="daa-index" aria-labelledby="daa-index-title">
-            <p id="daa-index-title">In this paper</p>
-            <span>{sections.length} sections / 48 min</span>
-            <ol>
-              {sections.map((heading, index) => (
-                <li><a href={`#${heading.slug}`}><b>{String(index + 1).padStart(2, "0")}</b>{heading.text}</a></li>
-              ))}
-              <li><a href="#sources-heading"><b>REF</b>Sources &amp; references</a></li>
-            </ol>
-          </nav>
-
-          <details class="daa-mobile-index">
-            <summary><span>In this paper</span><b>{sections.length} sections</b></summary>
-            <nav aria-label="Publication sections">
-              <ol>
-                {sections.map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}
-                <li><a href="#sources-heading">Sources &amp; references</a></li>
-              </ol>
-            </nav>
-          </details>
-
-          <div class="daa-prose">
-            <span class="daa-canonical-label">Canonical publication text / Publication Paper v6.4.3</span>
-            <Content />
-          </div>
-        </div>
-      </article>
-
-      <section class="daa-references" aria-labelledby="sources-heading">
-        <details>
-          <summary>
-            <span><small>Research record / Complete bibliography</small><strong id="sources-heading">Sources &amp; references</strong></span>
-            <b>56 sources <i aria-hidden="true">＋</i></b>
-          </summary>
-          <div class="daa-reference-list"><References /></div>
-        </details>
-      </section>
-
       <footer class="daa-end">
         <p>Distributed Agentic Attacks / Publication Paper v6.4.3</p>
         <a href="/research/">Return to Research <span aria-hidden="true">↗</span></a>
@@ -159,7 +161,7 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
   .daa-hero {
     position: relative;
     display: grid;
-    min-height: min(980px, calc(100svh - 76px));
+    min-height: min(880px, calc(100svh - 76px));
     overflow: hidden;
     isolation: isolate;
     border-bottom: 1px solid var(--line);
@@ -170,33 +172,42 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
     background-size: 42px 42px;
   }
 
+  :global(.daa-hero .signal-lattice__fallback),
+  :global(.daa-hero .signal-lattice__canvas) {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0 52%, #000 72%);
+    mask-image: linear-gradient(90deg, transparent 0 52%, #000 72%);
+  }
+
   .daa-hero-copy {
     position: relative;
     z-index: 2;
     align-self: center;
     width: min(100%, 1240px);
-    padding: clamp(108px, 14vh, 170px) var(--page-pad) clamp(190px, 23vh, 260px);
+    padding: clamp(84px, 10vh, 120px) var(--page-pad) clamp(148px, 17vh, 190px);
     pointer-events: none;
   }
 
   .daa-hero-copy h1 {
+    display: grid;
     max-width: 1100px;
     margin: 0;
     font-size: clamp(4.4rem, min(10vw, 13vh), 10.8rem);
     font-weight: 760;
     line-height: .8;
     letter-spacing: -.075em;
-    text-wrap: balance;
   }
 
-  .daa-hero-copy h1 span {
+  .daa-title-word,
+  .daa-title-row { display: block; }
+  .daa-title-row { display: flex; align-items: baseline; gap: .12em; white-space: nowrap; }
+  .daa-hero-copy h1 .daa-title-outline {
     color: transparent;
     -webkit-text-stroke: 1px rgba(244, 242, 238, .86);
   }
 
   .daa-paper-title {
     max-width: 820px;
-    margin: 38px 0 0;
+    margin: 30px 0 0;
     color: var(--muted);
     font: 680 clamp(.72rem, 1vw, .9rem)/1.55 var(--mono);
     letter-spacing: .1em;
@@ -205,14 +216,14 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
 
   .daa-hook {
     max-width: 880px;
-    margin: 30px 0 0;
+    margin: 24px 0 0;
     color: var(--paper);
     font-size: clamp(1.25rem, 2.15vw, 2rem);
     line-height: 1.42;
   }
 
   .daa-hook strong { color: var(--white); font-weight: 720; }
-  .daa-hero-copy .button { margin-top: 36px; pointer-events: auto; }
+  .daa-hero-copy .button { margin-top: 30px; pointer-events: auto; }
 
   .daa-hero-meta {
     position: absolute;
@@ -250,15 +261,15 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
   .daa-signal-strip i { width: 4px; height: 4px; flex: 0 0 auto; border-radius: 50%; background: var(--signal); box-shadow: 0 0 12px var(--signal); }
 
   .daa-results { border-bottom: 1px solid var(--line); }
-  .daa-results > header { padding: clamp(62px, 8vw, 120px) var(--page-pad) clamp(44px, 6vw, 82px); }
-  .daa-results h2 { max-width: 1000px; margin: 0; font-size: clamp(3.2rem, 7vw, 8.3rem); line-height: .84; letter-spacing: -.065em; }
+  .daa-results > header { padding: clamp(46px, 5vw, 72px) var(--page-pad) clamp(32px, 4vw, 50px); }
+  .daa-results h2 { max-width: 900px; margin: 0; font-size: clamp(3.2rem, 5.5vw, 6.2rem); line-height: .86; letter-spacing: -.06em; }
   .daa-results ol { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0; padding: 0; border-top: 1px solid var(--line); list-style: none; }
-  .daa-results li { min-height: 280px; padding: clamp(34px, 4vw, 64px); }
+  .daa-results li { min-height: 210px; padding: clamp(30px, 3vw, 46px); }
   .daa-results li + li { border-left: 1px solid var(--line); }
-  .daa-results li > span { display: block; margin-bottom: clamp(54px, 7vw, 96px); color: var(--signal); font: 700 .6rem/1 var(--mono); }
-  .daa-results strong { display: block; font-size: clamp(1.6rem, 2.7vw, 3.2rem); line-height: .94; letter-spacing: -.04em; }
+  .daa-results li > span { display: block; margin-bottom: clamp(28px, 3vw, 42px); color: var(--signal); font: 700 .6rem/1 var(--mono); }
+  .daa-results strong { display: block; font-size: clamp(1.55rem, 2.2vw, 2.55rem); line-height: .98; letter-spacing: -.035em; }
   .daa-results li:last-child strong { color: var(--signal); }
-  .daa-results li p { max-width: 380px; margin: 24px 0 0; color: var(--muted); line-height: 1.62; }
+  .daa-results li p { max-width: 380px; margin: 17px 0 0; color: var(--muted); line-height: 1.55; }
 
   .daa-artifacts {
     display: grid;
@@ -311,8 +322,17 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
   }
 
   :global(.daa-prose > *) { max-width: 760px; }
-  .daa-canonical-label { display: block; margin-bottom: 38px; color: var(--signal); font: 700 .6rem/1.45 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
-  :global(.daa-prose > p:first-of-type) { max-width: 900px; color: var(--white); font: 560 clamp(1.55rem, 2.6vw, 2.55rem)/1.4 var(--sans); letter-spacing: -.025em; }
+  :global(.daa-prose .publication-context) { max-width: 900px; margin: 0 0 36px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  :global(.daa-prose .publication-context > summary) { display: flex; min-height: 56px; align-items: center; gap: 14px; color: var(--paper); cursor: pointer; list-style: none; }
+  :global(.daa-prose .publication-context > summary::-webkit-details-marker) { display: none; }
+  :global(.daa-prose .publication-context > summary span),
+  :global(.daa-prose .publication-context > summary small) { font: 700 .6rem/1.4 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+  :global(.daa-prose .publication-context > summary span) { color: var(--signal); }
+  :global(.daa-prose .publication-context > summary small) { color: var(--muted); }
+  :global(.daa-prose .publication-context > summary::after) { margin-left: auto; color: var(--signal); font: 400 1.15rem/1 var(--sans); content: "＋"; }
+  :global(.daa-prose .publication-context[open] > summary::after) { content: "−"; }
+  :global(.daa-prose .publication-context-body) { padding: 26px 0 10px; border-top: 1px solid var(--line); }
+  :global(.daa-prose .publication-context-body p) { max-width: 820px; color: var(--muted); font: 400 clamp(.98rem, 1.1vw, 1.08rem)/1.72 Georgia, "Times New Roman", serif; }
   :global(.daa-prose h2) { max-width: 980px; margin: 2.2em 0 .72em; padding-top: .32em; scroll-margin-top: 28px; font-size: clamp(3.2rem, 5.8vw, 6.8rem); line-height: .88; letter-spacing: -.062em; overflow-wrap: anywhere; hyphens: auto; }
   :global(.daa-prose h2::before) { display: block; width: 42px; height: 2px; margin-bottom: 22px; background: var(--signal); content: ""; }
   :global(.daa-prose h2:first-of-type) { margin-top: 1.5em; }
@@ -427,11 +447,25 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
   }
 
   @media (max-width: 820px) {
-    .daa-hero { min-height: min(880px, calc(100svh - 68px)); }
-    .daa-hero-copy { align-self: start; padding: 116px 24px 250px; }
-    .daa-hero-copy h1 { font-size: clamp(4rem, 19vw, 7.2rem); }
-    .daa-paper-title { max-width: 84%; }
-    .daa-hook { max-width: 88%; font-size: 1.16rem; }
+    .daa-hero { min-height: min(800px, calc(100svh - 68px)); }
+    :global(.daa-hero .signal-lattice) {
+      --lattice-center-x: 76%;
+      --lattice-center-y: 72%;
+      --lattice-radius: min(24cqw, 15cqh, 112px);
+    }
+    :global(.daa-hero .signal-lattice__fallback),
+    :global(.daa-hero .signal-lattice__canvas) {
+      opacity: .42;
+      -webkit-mask-image: linear-gradient(180deg, transparent 0 54%, #000 76%);
+      mask-image: linear-gradient(180deg, transparent 0 54%, #000 76%);
+    }
+    :global(.daa-hero .signal-lattice__canvas) { transform: translate(20%, 22%) scale(.9); transform-origin: center; }
+    .daa-hero-copy { align-self: start; padding: 88px 24px 190px; }
+    .daa-hero-copy h1 { font-size: clamp(3.8rem, 17vw, 6.4rem); line-height: .82; letter-spacing: -.065em; }
+    .daa-title-row { display: grid; gap: 0; white-space: normal; }
+    .daa-paper-title { max-width: 100%; margin-top: 26px; }
+    .daa-hook { max-width: 100%; margin-top: 22px; font-size: 1.08rem; line-height: 1.42; }
+    .daa-hero-copy .button { margin-top: 28px; }
     .daa-hero-meta { right: 22px; bottom: 24px; left: 22px; grid-template-columns: repeat(2, 1fr); }
     .daa-hero-meta div { min-height: 72px; padding: 15px 14px 12px 0; }
     .daa-hero-meta div + div { padding-left: 14px; }
@@ -441,9 +475,12 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
     .daa-signal-strip span:nth-of-type(n + 3),
     .daa-signal-strip i:nth-of-type(n + 2) { display: none; }
     .daa-results ol { grid-template-columns: 1fr; }
-    .daa-results li { min-height: 240px; }
+    .daa-results > header { padding: 44px 24px 32px; }
+    .daa-results li { min-height: 0; padding: 28px 34px 30px; }
     .daa-results li + li { border-top: 1px solid var(--line); border-left: 0; }
-    .daa-results li > span { margin-bottom: 54px; }
+    .daa-results li > span { margin-bottom: 22px; }
+    .daa-results strong { font-size: 1.62rem; }
+    .daa-results li p { margin-top: 13px; }
     .daa-artifacts { grid-template-columns: 1fr; }
     .daa-artifacts > header { padding: 58px 24px 50px; }
     .daa-artifacts ol { border-top: 1px solid var(--line); border-left: 0; }
@@ -461,8 +498,10 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
     .daa-mobile-index ol { margin: 0; padding: 0; list-style: none; }
     .daa-mobile-index li { border-top: 1px solid var(--line); }
     .daa-mobile-index a { display: block; padding: 12px 0; color: var(--muted); font: 650 .62rem/1.4 var(--mono); text-decoration: none; text-transform: uppercase; }
-    .daa-prose { padding: 62px 24px 94px; border-left: 0; }
+    .daa-prose { padding: 34px 24px 94px; border-left: 0; }
+    :global(.daa-prose .publication-context) { margin-bottom: 28px; }
     :global(.daa-prose h2) { font-size: clamp(3rem, 14vw, 5.2rem); }
+    :global(.daa-prose h2:first-of-type) { margin-top: 1.1em; }
     :global(.daa-prose h3) { font-size: clamp(2rem, 9.8vw, 3.2rem); }
     :global(.daa-prose table) { display: block; max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; -webkit-overflow-scrolling: touch; }
     :global(.daa-prose th),
@@ -474,12 +513,17 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
   }
 
   @media (max-width: 440px) {
-    .daa-hero-copy { padding-bottom: 276px; }
-    .daa-hero-copy h1 { font-size: clamp(3.7rem, 18vw, 5.2rem); }
-    .daa-hero-copy h1 span { -webkit-text-stroke-width: .8px; }
-    .daa-hook { margin-top: 24px; }
-    .daa-results > header { padding-right: 24px; padding-left: 24px; }
-    .daa-results h2 { font-size: clamp(3rem, 15vw, 4.4rem); }
+    .daa-hero-copy { padding-top: 82px; padding-bottom: 184px; }
+    .daa-hero-copy h1 { font-size: clamp(3.45rem, 16.8vw, 4.35rem); }
+    .daa-hero-copy h1 .daa-title-outline { -webkit-text-stroke-width: .8px; }
+    .daa-results h2 { font-size: clamp(3rem, 13.8vw, 4rem); }
+    .daa-results > header { padding: 34px 24px 26px; }
+    .daa-results li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px 12px; padding: 23px 24px 25px; }
+    .daa-results li > span { grid-row: 1 / span 2; margin: 5px 0 0; }
+    .daa-results strong,
+    .daa-results li p { grid-column: 2; }
+    .daa-results strong { font-size: 1.46rem; }
+    .daa-results li p { margin: 0; }
     .daa-references details > summary { min-height: 230px; flex-direction: column; align-items: flex-start; justify-content: center; }
     .daa-references summary > b { align-self: auto; }
   }
@@ -487,6 +531,10 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
   @media (max-width: 340px) {
     .daa-signal-strip span:nth-of-type(n + 2),
     .daa-signal-strip i { display: none; }
+  }
+
+  @media (min-width: 740px) and (max-width: 820px) {
+    .daa-title-row { display: flex; gap: .12em; white-space: nowrap; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -530,6 +578,8 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
     :global(.daa-prose blockquote) { break-inside: avoid; }
     :global(.daa-prose table) { display: table; overflow: visible; }
     :global(.daa-prose .publication-figure) { break-inside: avoid; }
+    :global(.daa-prose .publication-context > summary) { display: none; }
+    :global(.daa-prose .publication-context:not([open]) > *:not(summary)) { display: block; }
     .daa-references { background: #fff; }
     .daa-references details:not([open]) > *:not(summary) { display: block; }
     .daa-reference-list { padding: 0; columns: 1; }

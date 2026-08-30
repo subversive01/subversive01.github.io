@@ -3,9 +3,13 @@ title: "Distributed Agentic Attacks"
 kind: "article"
 ---
 
-This is a conceptual threat-model paper updated after one frozen confirmatory architecture pilot, two outcome-informed exploratory terminal-symbolic studies, a dated post-study review of the August 2026 OpenAI/Hugging Face incident, and a source-by-source validation of consequential prior-art and incident claims. The field record contains a strong observational candidate DAA for the bounded Hugging Face subcampaign. It does not establish distributed superiority, a distribution-specific DDoS-like burden multiplier, or a controlled real-world causal effect.
-
-*The companion Research Dossier v4.4.3 preserves literature review, source provenance, incident boundaries, novelty constraints, rejected constructs, and open questions [56]. The companion Experimental Evidence and Reproducibility Record v1.4.2 controls the detailed methods synopsis, registered decision rules, deviations, sanitized result tables, hashes, reproduction limits, and a clearly separated post-study external-evidence addendum [46]. Frozen protocols and receipts remain authoritative.*
+<details class="publication-context">
+  <summary><span>Publication details</span><small>v6.4.3</small></summary>
+  <div class="publication-context-body">
+    <p>This is a conceptual threat-model paper updated after one frozen confirmatory architecture pilot, two outcome-informed exploratory terminal-symbolic studies, a dated post-study review of the August 2026 OpenAI/Hugging Face incident, and a source-by-source validation of consequential prior-art and incident claims. The field record contains a strong observational candidate DAA for the bounded Hugging Face subcampaign. It does not establish distributed superiority, a distribution-specific DDoS-like burden multiplier, or a controlled real-world causal effect.</p>
+    <p><em>The companion <a href="https://zenodo.org/records/22150937" rel="external">Research Dossier v4.4.3</a> preserves literature review, source provenance, incident boundaries, novelty constraints, rejected constructs, and open questions [56]. The companion <a href="https://zenodo.org/records/22150939" rel="external">Experimental Evidence and Reproducibility Record v1.4.2</a> controls the detailed methods synopsis, registered decision rules, deviations, sanitized result tables, hashes, reproduction limits, and a clearly separated post-study external-evidence addendum [46]. Frozen protocols and receipts remain authoritative.</em></p>
+  </div>
+</details>
 
 ## Abstract
 
