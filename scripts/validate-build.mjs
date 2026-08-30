@@ -75,6 +75,7 @@ const publicationSourceHosts = new Set([
   "openai.com",
   "opentelemetry.io",
   "research.checkpoint.com",
+  "zenodo.org",
   "www.aisi.gov.uk",
   "www.anthropic.com",
   "www.cisa.gov",
@@ -182,6 +183,15 @@ for (const label of [
   "Sources &amp; references"
 ]) {
   if (!daaHtml.includes(label)) failures.push(`DAA publication identity is missing: ${label}`);
+}
+for (const artifact of [
+  ["https://zenodo.org/records/22150935", "DOI 10.5281/zenodo.22150935"],
+  ["https://zenodo.org/records/22150937", "DOI 10.5281/zenodo.22150937"],
+  ["https://zenodo.org/records/22150939", "DOI 10.5281/zenodo.22150939"]
+]) {
+  const [href, doi] = artifact;
+  if (!daaHtml.includes(`href="${href}"`)) failures.push(`DAA Zenodo record link is missing: ${href}`);
+  if (!daaHtml.includes(doi)) failures.push(`DAA Zenodo DOI is missing: ${doi}`);
 }
 for (const privateProductionNote of ["Hero animation:", "Visual:", "Animation:", "Graph:", "Timeline:", "Production note:", "Page treatment:", "Final visual:"]) {
   if (daaHtml.includes(privateProductionNote)) failures.push(`Private DAA production note leaked: ${privateProductionNote}`);
