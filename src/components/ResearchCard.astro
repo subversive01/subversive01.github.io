@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  entry: CollectionEntry<"research">;
+  index: number;
+}
+
+const { entry, index } = Astro.props;
+const date = entry.data.publishedAt.toLocaleDateString("en-US", {
+  month: "short",
+  day: "2-digit",
+  year: "numeric",
+  timeZone: "UTC"
+});
+---
+
+<article class="research-card">
+  <a href={entry.data.route ?? `/research/${entry.id}/`} aria-label={`Read ${entry.data.title}`}>
+    <header>
+      <span>{String(index + 1).padStart(2, "0")}</span>
+      <span>{entry.data.status.replaceAll("-", " ")}</span>
+    </header>
+    <div class="card-signal" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="card-copy">
+      <p>{entry.data.study} / {entry.data.version}</p>
+      <h3>{entry.data.title}</h3>
+      <p>{entry.data.description}</p>
+    </div>
+    <footer>
+      <time datetime={entry.data.publishedAt.toISOString()}>{date}</time>
+      <span>{entry.data.readingMinutes} min read</span>
+      <strong>Open note <b aria-hidden="true">↗</b></strong>
+    </footer>
+  </a>
+</article>

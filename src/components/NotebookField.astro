@@ -1,0 +1,65 @@
+---
+interface Props { class?: string; seed?: number; }
+const { class: className, seed = 2608 } = Astro.props;
+---
+
+<figure class:list={["notebook-field", className]} data-notebook-field data-notebook-seed={seed}>
+  <div class="notebook-field__stage">
+    <div class="notebook-field__fallback" role="img" aria-label="Static abstract notebook field with margin marks, fragments, and a red editorial trace.">
+      <div class="notebook-field__lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="notebook-field__marks" aria-hidden="true"><b></b><b></b><b></b><b></b><b></b></div>
+      <span class="notebook-field__trace" aria-hidden="true"></span>
+    </div>
+    <canvas class="notebook-field__canvas" data-notebook-canvas aria-hidden="true"></canvas>
+    <div class="notebook-field__hud" aria-hidden="true">
+      <span>Personal notes / field observations</span>
+      <span>Security / systems / hardware / art</span>
+    </div>
+  </div>
+  <figcaption class="notebook-field__caption">Decorative local notebook animation. Its marks are generated in the browser and contain no visitor or live data.</figcaption>
+</figure>
+
+<script>
+  import "../scripts/notebook-field.ts";
+</script>
+
+<style>
+  .notebook-field { position: absolute; inset: 0; z-index: 0; min-width: 0; margin: 0; overflow: hidden; pointer-events: none; }
+  .notebook-field__stage,
+  .notebook-field__fallback,
+  .notebook-field__canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .notebook-field__stage { overflow: hidden; background: radial-gradient(circle at 76% 48%, rgba(255,91,69,.075), transparent 19%), radial-gradient(circle at 70% 50%, rgba(103,32,148,.08), transparent 37%); }
+  .notebook-field__fallback { opacity: .9; transition: opacity 320ms ease; }
+  .notebook-field__lines i { position: absolute; left: 50%; width: 42%; height: 1px; background: rgba(216,216,210,.11); }
+  .notebook-field__lines i:nth-child(1) { top: 23%; width: 34%; }
+  .notebook-field__lines i:nth-child(2) { top: 32%; left: 58%; width: 29%; }
+  .notebook-field__lines i:nth-child(3) { top: 43%; width: 41%; }
+  .notebook-field__lines i:nth-child(4) { top: 55%; left: 62%; width: 27%; }
+  .notebook-field__lines i:nth-child(5) { top: 67%; left: 53%; width: 37%; }
+  .notebook-field__lines i:nth-child(6) { top: 76%; left: 66%; width: 22%; }
+  .notebook-field__marks b { position: absolute; width: 8px; height: 8px; border: 1px solid rgba(244,242,238,.54); transform: rotate(45deg); }
+  .notebook-field__marks b:nth-child(1) { top: 22.4%; left: 57%; }
+  .notebook-field__marks b:nth-child(2) { top: 42.4%; left: 76%; border-color: rgba(255,91,69,.8); }
+  .notebook-field__marks b:nth-child(3) { top: 54.4%; left: 65%; }
+  .notebook-field__marks b:nth-child(4) { top: 66.4%; left: 84%; }
+  .notebook-field__marks b:nth-child(5) { top: 75.4%; left: 71%; }
+  .notebook-field__trace { position: absolute; top: 41%; left: 73%; width: min(18vw, 220px); height: min(18vw, 220px); border: 1px solid rgba(255,91,69,.18); border-radius: 50%; }
+  .notebook-field__canvas { opacity: 0; transition: opacity 320ms ease; }
+  .notebook-field.is-enhanced .notebook-field__fallback { opacity: 0; }
+  .notebook-field.is-enhanced .notebook-field__canvas { opacity: .98; }
+  .notebook-field__hud { position: absolute; inset: 24px 28px auto; display: flex; justify-content: space-between; gap: 20px; color: rgba(216,216,210,.46); font: 650 .54rem/1.4 var(--mono); letter-spacing: .13em; text-transform: uppercase; }
+  .notebook-field__caption { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  @media (max-width: 720px) {
+    .notebook-field__hud { inset: 16px 18px auto; }
+    .notebook-field__hud span:last-child { display: none; }
+    .notebook-field__lines,
+    .notebook-field__marks,
+    .notebook-field__trace { transform: translateX(-22%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .notebook-field__fallback,
+    .notebook-field__canvas { transition: none; }
+    .notebook-field.is-enhanced .notebook-field__fallback { opacity: .9; }
+    .notebook-field.is-enhanced .notebook-field__canvas { opacity: 0; }
+  }
+</style>

@@ -1,0 +1,225 @@
+---
+import { getCollection } from "astro:content";
+import ProjectCircuit from "../components/ProjectCircuit.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const entries = (await getCollection("projects")).sort(
+  (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()
+);
+---
+
+<BaseLayout
+  title="Projects — SBHC Security"
+  description="Independent software, security, hardware, and experimental projects from SBHC Security."
+>
+  <div class="research-shell projects-shell">
+    <SiteHeader active="projects" />
+    <main class="projects-page">
+      <header class="projects-hero">
+        <ProjectCircuit />
+        <div class="projects-hero-copy">
+          <p class="eyebrow">Built in Los Angeles</p>
+          <h1>PROJECTS</h1>
+          <p>
+            Things I build, test, break, and keep working on across software,
+            security, systems, hardware, and art.
+          </p>
+        </div>
+        <dl class="projects-hero-meta" aria-label="Project index status">
+          <div><dt>Entries</dt><dd>{String(entries.length).padStart(2, "0")}</dd></div>
+          <div><dt>Format</dt><dd>Build journal</dd></div>
+        </dl>
+      </header>
+
+      <section class="project-index" aria-labelledby="project-index-title">
+        <header class="project-index-header">
+          <div>
+            <p class="section-label">Project journal / Newest first</p>
+            <h2 id="project-index-title">Builds &amp; experiments</h2>
+          </div>
+          <p>Each entry can grow into its own notes, releases, images, and technical history over time.</p>
+        </header>
+
+        <div class="project-entries">
+          {entries.map((entry, index) => {
+            const date = entry.data.publishedAt.toLocaleDateString("en-US", {
+              month: "short",
+              day: "2-digit",
+              year: "numeric",
+              timeZone: "UTC"
+            });
+            return (
+              <article class="project-entry">
+                <a href={entry.data.route ?? `/projects/${entry.id}/`} aria-label={`Open ${entry.data.title}`}>
+                  <span class="project-number">{String(index + 1).padStart(2, "0")}</span>
+                  <div class="project-title">
+                    <p>{entry.data.category}</p>
+                    <h3>{entry.data.title}</h3>
+                  </div>
+                  <p class="project-description">{entry.data.description}</p>
+                  <div class="project-entry-meta">
+                    <span>{entry.data.status}</span>
+                    <time datetime={entry.data.publishedAt.toISOString()}>{date}</time>
+                  </div>
+                  <strong aria-hidden="true">↗</strong>
+                </a>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+    </main>
+    <SiteFooter />
+  </div>
+</BaseLayout>
+
+<style>
+  .projects-shell { min-height: 100svh; }
+  .projects-page { border-bottom: 1px solid var(--line); background: var(--ink); }
+
+  .projects-hero {
+    position: relative;
+    display: grid;
+    min-height: min(690px, calc(100svh - 76px));
+    overflow: hidden;
+    isolation: isolate;
+    border-bottom: 1px solid var(--line);
+    background:
+      linear-gradient(rgba(167, 173, 174, .045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(167, 173, 174, .045) 1px, transparent 1px),
+      var(--ink);
+    background-size: 42px 42px;
+  }
+
+  .projects-hero-copy {
+    position: relative;
+    z-index: 2;
+    align-self: center;
+    width: min(100%, 940px);
+    padding: 74px var(--page-pad);
+    pointer-events: none;
+  }
+
+  .projects-hero h1 {
+    margin: 0;
+    font-size: clamp(4.8rem, min(12vw, 16vh), 12rem);
+    line-height: .78;
+    letter-spacing: -.085em;
+  }
+
+  .projects-hero-copy > p:last-child {
+    max-width: 620px;
+    margin: clamp(30px, 4vh, 44px) 0 0;
+    color: var(--paper);
+    font-size: clamp(1rem, 1.45vw, 1.28rem);
+    line-height: 1.65;
+  }
+
+  .projects-hero-meta {
+    position: absolute;
+    right: clamp(32px, 5vw, 80px);
+    bottom: 32px;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 34px;
+    margin: 0;
+  }
+
+  .projects-hero-meta div { display: grid; gap: 5px; }
+  .projects-hero-meta dt,
+  .projects-hero-meta dd { margin: 0; font: 650 .56rem/1.4 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+  .projects-hero-meta dt { color: var(--muted); }
+
+  .project-index { border-bottom: 1px solid var(--line); }
+  .project-index-header {
+    display: grid;
+    min-height: 320px;
+    grid-template-columns: 1fr .62fr;
+    gap: 70px;
+    align-items: end;
+    padding: clamp(52px, 6vw, 96px) var(--page-pad);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .project-index-header h2 {
+    margin: 0;
+    font-size: clamp(3rem, 6vw, 7.2rem);
+    line-height: .86;
+    letter-spacing: -.06em;
+  }
+
+  .project-index-header > p { max-width: 520px; margin: 0 0 8px; color: var(--muted); line-height: 1.7; }
+  .project-entries { margin: 0; }
+  .project-entry + .project-entry { border-top: 1px solid var(--line); }
+
+  .project-entry > a {
+    position: relative;
+    display: grid;
+    min-height: 220px;
+    grid-template-columns: 64px minmax(250px, .72fr) minmax(300px, 1fr) 150px 28px;
+    gap: clamp(22px, 3vw, 52px);
+    align-items: center;
+    padding: 34px var(--page-pad);
+    color: inherit;
+    text-decoration: none;
+    transition: background-color 180ms ease;
+  }
+
+  .project-entry > a::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 2px;
+    background: var(--signal);
+    content: "";
+    opacity: 0;
+    transition: opacity 180ms ease;
+  }
+
+  .project-entry > a:hover { background: var(--ink-raised); }
+  .project-entry > a:hover::before,
+  .project-entry > a:focus-visible::before { opacity: 1; }
+  .project-number { align-self: start; color: var(--signal); font: 700 .6rem/1 var(--mono); }
+  .project-title p { margin: 0 0 18px; color: var(--signal); font: 700 .57rem/1.4 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+  .project-title h3 { margin: 0; font-size: clamp(2.1rem, 3.8vw, 4.6rem); line-height: .9; letter-spacing: -.055em; }
+  .project-description { max-width: 650px; margin: 0; color: var(--muted); line-height: 1.7; }
+  .project-entry-meta { display: grid; gap: 12px; color: var(--muted); font: 650 .56rem/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+  .project-entry-meta span { color: var(--white); }
+  .project-entry > a > strong { color: var(--signal); font: 700 1rem/1 var(--mono); }
+
+  @media (max-width: 980px) {
+    .project-entry > a { grid-template-columns: 48px minmax(0, 1fr) 120px 24px; }
+    .project-description { grid-column: 2; }
+    .project-entry-meta { grid-column: 3; grid-row: 1 / span 2; }
+    .project-entry > a > strong { grid-column: 4; grid-row: 1 / span 2; }
+  }
+
+  @media (max-width: 760px) {
+    .projects-hero { min-height: min(650px, calc(100svh - 68px)); }
+    .projects-hero-copy { padding: 92px 24px 70px; }
+    .projects-hero h1 { font-size: clamp(3.8rem, 21vw, 6.5rem); }
+    .projects-hero-copy > p:last-child { max-width: 86%; font-size: .95rem; }
+    .projects-hero-meta { right: 20px; bottom: 18px; gap: 24px; }
+    .projects-hero-meta div:last-child { display: none; }
+    .project-index-header { min-height: 390px; grid-template-columns: 1fr; gap: 34px; padding: 58px 26px; }
+    .project-index-header > p { margin: 0; }
+    .project-entry > a {
+      min-height: 360px;
+      grid-template-columns: 34px minmax(0, 1fr) 22px;
+      grid-template-rows: auto auto auto;
+      gap: 20px 14px;
+      align-items: start;
+      padding: 38px 24px;
+    }
+    .project-number { grid-column: 1; grid-row: 1 / -1; }
+    .project-title { grid-column: 2; }
+    .project-title h3 { font-size: clamp(2.5rem, 12vw, 4rem); }
+    .project-description { grid-column: 2 / -1; grid-row: 2; }
+    .project-entry-meta { grid-column: 2; grid-row: 3; grid-template-columns: repeat(2, auto); justify-content: start; gap: 22px; }
+    .project-entry > a > strong { grid-column: 3; grid-row: 1; }
+  }
+</style>

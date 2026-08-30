@@ -1,0 +1,18 @@
+---
+interface Props {
+  active?: "home" | "research" | "projects" | "blog";
+}
+
+const { active } = Astro.props;
+---
+
+<header class="masthead">
+  <a class="brand" href="/" aria-label="SBHC Security home">SBHC<span>Security</span></a>
+  <p class="masthead-status"><span>Independent research</span></p>
+  <nav aria-label="Primary navigation">
+    <a href="/" aria-current={active === "home" ? "page" : undefined}>Home</a>
+    <a href="/research/" aria-current={active === "research" ? "page" : undefined}>Research</a>
+    <a href="/projects/" aria-current={active === "projects" ? "page" : undefined}>Projects</a>
+    <a href="/blog/" aria-current={active === "blog" ? "page" : undefined}>Blog</a>
+  </nav>
+</header>

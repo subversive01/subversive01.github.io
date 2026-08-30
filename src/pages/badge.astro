@@ -1,0 +1,168 @@
+---
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import Station562Visual from "../components/Station562Visual.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Station 562 Badge — SBHC Security"
+  description="Station 562 Badge firmware releases, owner documentation, hardware CTF, and safe self-flashing tools."
+>
+  <div class="research-shell badge-shell">
+    <SiteHeader active="projects" />
+    <main class="badge-page">
+      <section class="badge-copy" aria-labelledby="badge-title">
+        <p class="eyebrow">Hardware / firmware / play</p>
+        <h1 id="badge-title">STATION 562 <br /><span>BADGE</span></h1>
+        <p class="badge-lede">
+          Station 562 Badge is my ESP32 hardware project: firmware releases,
+          owner documentation, a signed hardware CTF, and safe self-flashing
+          tools for CodeCell and XIAO builds.
+        </p>
+        <dl class="badge-facts">
+          <div><dt>Release</dt><dd>V6.3.0</dd></div>
+          <div><dt>Hardware</dt><dd>ESP32-C3 / C6</dd></div>
+          <div><dt>Repository</dt><dd>Public</dd></div>
+        </dl>
+        <a
+          class="button button-primary"
+          href="https://github.com/subversive01/station562-badge"
+          target="_blank"
+          rel="noopener noreferrer"
+        >View the project on GitHub <span aria-hidden="true">↗</span></a>
+      </section>
+
+      <figure class="badge-visual">
+        <Station562Visual class="badge-station-visual" />
+        <figcaption>Station 562 / hardware signal system</figcaption>
+      </figure>
+    </main>
+    <SiteFooter />
+  </div>
+</BaseLayout>
+
+<style>
+  .badge-shell {
+    display: grid;
+    min-height: 100svh;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+
+  .badge-page {
+    display: grid;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1.08fr) minmax(390px, .92fr);
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+    background:
+      linear-gradient(rgba(167, 173, 174, .045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(167, 173, 174, .045) 1px, transparent 1px),
+      var(--ink);
+    background-size: 42px 42px;
+  }
+
+  .badge-copy {
+    position: relative;
+    z-index: 2;
+    align-self: center;
+    padding: clamp(44px, 6vw, 96px) var(--page-pad);
+  }
+
+  .badge-copy h1 {
+    margin: 0;
+    font-size: clamp(4rem, min(8.4vw, 11vh), 9.4rem);
+    font-weight: 760;
+    line-height: .82;
+    letter-spacing: -.075em;
+  }
+
+  .badge-copy h1 span {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(244, 242, 238, .86);
+  }
+
+  .badge-lede {
+    max-width: 680px;
+    margin: clamp(24px, 3.5vh, 38px) 0 0;
+    color: var(--paper);
+    font-size: clamp(.96rem, 1.25vw, 1.16rem);
+    line-height: 1.62;
+  }
+
+  .badge-facts {
+    display: grid;
+    max-width: 680px;
+    grid-template-columns: repeat(3, 1fr);
+    margin: clamp(24px, 3.5vh, 38px) 0 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .badge-facts div { padding: 15px 12px 0 0; }
+  .badge-facts div + div { padding-left: 18px; border-left: 1px solid var(--line); }
+  .badge-facts dt,
+  .badge-facts dd { margin: 0; font: 650 .58rem/1.45 var(--mono); letter-spacing: .09em; text-transform: uppercase; }
+  .badge-facts dt { margin-bottom: 5px; color: var(--muted); }
+  .badge-copy .button { margin-top: clamp(24px, 3.5vh, 38px); }
+
+  .badge-visual {
+    position: relative;
+    display: grid;
+    min-height: 0;
+    place-items: stretch;
+    margin: 0;
+    overflow: hidden;
+    border-left: 1px solid var(--line);
+    background: var(--black);
+  }
+
+  .badge-station-visual { min-height: 100%; }
+
+  .badge-visual figcaption {
+    position: absolute;
+    right: 26px;
+    bottom: 20px;
+    color: var(--muted);
+    font: 650 .5rem/1 var(--mono);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+  }
+
+  .badge-shell :global(.site-footer) {
+    min-height: 84px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto;
+    gap: 32px;
+    align-items: center;
+    padding: 14px clamp(20px, 3vw, 54px);
+  }
+
+  .badge-shell :global(.site-footer > div) { display: flex; min-width: 0; align-items: center; gap: 24px; }
+  .badge-shell :global(.site-footer > div > p) { max-width: 480px; margin: 0; font-size: .68rem; line-height: 1.45; }
+  .badge-shell :global(.site-footer dl) { grid-column: auto; grid-row: auto; grid-template-columns: repeat(3, auto); }
+  .badge-shell :global(.site-footer dl div) { min-width: 112px; padding: 0 16px; }
+  .badge-shell :global(.footer-mark) { display: none; }
+
+  @media (max-width: 1080px) {
+    .badge-shell :global(.site-footer > div > p) { display: none; }
+  }
+
+  @media (max-width: 760px) {
+    .badge-shell { min-height: 100svh; }
+    .badge-page { grid-template-columns: 1fr; overflow: visible; }
+    .badge-copy { padding: 54px 24px 42px; }
+    .badge-copy h1 { font-size: clamp(3.3rem, 17vw, 5.6rem); }
+    .badge-lede { font-size: .94rem; }
+    .badge-facts { grid-template-columns: 1fr; }
+    .badge-facts div,
+    .badge-facts div + div { display: grid; grid-template-columns: 95px 1fr; padding: 10px 0; border-top: 1px solid var(--line); border-left: 0; }
+    .badge-facts dt { margin: 0; }
+    .badge-visual { min-height: 520px; border-top: 1px solid var(--line); border-left: 0; }
+    .badge-visual figcaption { right: 16px; }
+    .badge-shell :global(.site-footer) { display: flex; min-height: 56px; justify-content: space-between; padding: 12px 18px; }
+    .badge-shell :global(.site-footer dl),
+    .badge-shell :global(.site-footer > div > p) { display: none; }
+    .badge-shell :global(.footer-mark) { display: block; margin: 0; font-size: .5rem; writing-mode: horizontal-tb; }
+  }
+</style>

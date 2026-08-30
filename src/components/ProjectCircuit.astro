@@ -1,0 +1,154 @@
+---
+interface Props { class?: string; seed?: number; }
+const { class: className, seed = 5620 } = Astro.props;
+---
+
+<figure
+  class:list={["project-circuit", className]}
+  data-project-circuit
+  data-project-seed={seed}
+>
+  <div class="project-circuit__stage">
+    <div
+      class="project-circuit__fallback"
+      role="img"
+      aria-label="Static abstract circuit field representing projects moving from idea to working system."
+    >
+      <div class="project-circuit__routes" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <div class="project-circuit__nodes" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+      <b class="project-circuit__focus" aria-hidden="true"></b>
+    </div>
+
+    <canvas class="project-circuit__canvas" data-project-canvas aria-hidden="true"></canvas>
+
+    <div class="project-circuit__hud" aria-hidden="true">
+      <span>Software / security / hardware</span>
+      <span>Builds / experiments / releases</span>
+    </div>
+  </div>
+
+  <figcaption class="project-circuit__caption">
+    Decorative local circuit animation. Pointer proximity changes presentation
+    only; the graphic contains no live project or visitor data.
+  </figcaption>
+</figure>
+
+<script>
+  import "../scripts/project-circuit.ts";
+</script>
+
+<style>
+  .project-circuit {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .project-circuit__stage,
+  .project-circuit__fallback,
+  .project-circuit__canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .project-circuit__stage {
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 76% 50%, rgba(103, 32, 148, .12), transparent 26%),
+      radial-gradient(circle at 72% 52%, rgba(255, 91, 69, .045), transparent 44%);
+  }
+
+  .project-circuit__fallback { opacity: .88; transition: opacity 320ms ease; }
+  .project-circuit__routes span,
+  .project-circuit__nodes i,
+  .project-circuit__focus { position: absolute; display: block; }
+  .project-circuit__routes span { height: 1px; background: rgba(216, 216, 210, .12); transform-origin: left; }
+  .project-circuit__routes span:nth-child(1) { top: 22%; left: 50%; width: 26%; }
+  .project-circuit__routes span:nth-child(2) { top: 22%; left: 76%; width: 16%; transform: rotate(90deg); }
+  .project-circuit__routes span:nth-child(3) { top: 39%; left: 61%; width: 27%; }
+  .project-circuit__routes span:nth-child(4) { top: 39%; left: 61%; width: 20%; transform: rotate(90deg); }
+  .project-circuit__routes span:nth-child(5) { top: 58%; left: 48%; width: 34%; }
+  .project-circuit__routes span:nth-child(6) { top: 58%; left: 82%; width: 17%; transform: rotate(90deg); }
+  .project-circuit__routes span:nth-child(7) { top: 75%; left: 56%; width: 35%; }
+  .project-circuit__routes span:nth-child(8) { top: 30%; left: 52%; width: 27%; transform: rotate(36deg); }
+  .project-circuit__routes span:nth-child(9) { top: 68%; left: 64%; width: 21%; transform: rotate(-42deg); }
+  .project-circuit__routes span:nth-child(10) { top: 17%; left: 87%; width: 56%; transform: rotate(90deg); }
+
+  .project-circuit__nodes i {
+    width: 5px;
+    height: 5px;
+    border: 1px solid rgba(244, 242, 238, .68);
+    border-radius: 50%;
+    background: var(--ink);
+  }
+  .project-circuit__nodes i:nth-child(1) { top: 21.6%; left: 49.8%; }
+  .project-circuit__nodes i:nth-child(2) { top: 21.6%; left: 75.8%; border-color: var(--signal); }
+  .project-circuit__nodes i:nth-child(3) { top: 38.6%; left: 60.8%; }
+  .project-circuit__nodes i:nth-child(4) { top: 38.6%; left: 87.8%; }
+  .project-circuit__nodes i:nth-child(5) { top: 57.6%; left: 47.8%; }
+  .project-circuit__nodes i:nth-child(6) { top: 57.6%; left: 81.8%; border-color: var(--signal); }
+  .project-circuit__nodes i:nth-child(7) { top: 74.6%; left: 55.8%; }
+  .project-circuit__nodes i:nth-child(8) { top: 74.6%; left: 90.8%; }
+  .project-circuit__nodes i:nth-child(9) { top: 30%; left: 65%; }
+  .project-circuit__nodes i:nth-child(10) { top: 49%; left: 72%; }
+  .project-circuit__nodes i:nth-child(11) { top: 67%; left: 63%; }
+  .project-circuit__nodes i:nth-child(12) { top: 17%; left: 86.8%; }
+
+  .project-circuit__focus {
+    top: 45%;
+    left: 69%;
+    width: min(17vw, 220px);
+    aspect-ratio: 1;
+    border: 1px solid rgba(255, 91, 69, .16);
+    border-radius: 50%;
+    box-shadow: 0 0 48px rgba(103, 32, 148, .1);
+  }
+
+  .project-circuit__canvas { opacity: 0; transition: opacity 320ms ease; }
+  .project-circuit.is-enhanced .project-circuit__fallback { opacity: 0; }
+  .project-circuit.is-enhanced .project-circuit__canvas { opacity: 1; }
+
+  .project-circuit__hud {
+    position: absolute;
+    inset: 24px 28px auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    color: rgba(216, 216, 210, .46);
+    font: 650 .54rem/1.4 var(--mono);
+    letter-spacing: .13em;
+    text-transform: uppercase;
+  }
+
+  .project-circuit__caption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 720px) {
+    .project-circuit__hud { inset: 16px 18px auto; }
+    .project-circuit__hud span:last-child { display: none; }
+    .project-circuit__routes,
+    .project-circuit__nodes,
+    .project-circuit__focus { transform: translateX(-24%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-circuit__fallback,
+    .project-circuit__canvas { transition: none; }
+    .project-circuit.is-enhanced .project-circuit__fallback { opacity: .88; }
+    .project-circuit.is-enhanced .project-circuit__canvas { opacity: 0; }
+  }
+</style>

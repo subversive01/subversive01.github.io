@@ -1,0 +1,110 @@
+---
+import { getCollection } from "astro:content";
+import NotebookField from "../../components/NotebookField.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const entries = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()
+);
+---
+
+<BaseLayout
+  title="Blog — SBHC Security"
+  description="Personal notes on cybersecurity, software, systems, hardware, art, and whatever else I am thinking about."
+>
+  <div class="research-shell blog-shell">
+    <SiteHeader active="blog" />
+    <main>
+      <header class="blog-header">
+        <NotebookField />
+        <div class="blog-header-copy">
+          <p class="eyebrow">Personal notes / Los Angeles</p>
+          <h1>BLOG</h1>
+        </div>
+        <dl class="blog-header-meta" aria-label="Blog index status">
+          <div><dt>Entries</dt><dd>{String(entries.length).padStart(2, "0")}</dd></div>
+          <div><dt>Format</dt><dd>Personal notebook</dd></div>
+        </dl>
+      </header>
+
+      {entries.length > 0 && (
+        <section class="blog-feed" aria-label="Blog entries">
+          <ol>
+            {entries.map((entry, index) => {
+              const date = entry.data.publishedAt.toLocaleDateString("en-US", {
+                month: "short", day: "2-digit", year: "numeric", timeZone: "UTC"
+              });
+              return (
+                <li>
+                  <a href={`/blog/${entry.id}/`}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <div>
+                      <time datetime={entry.data.publishedAt.toISOString()}>{date}</time>
+                      <h3>{entry.data.title}</h3>
+                      <p>{entry.data.description}</p>
+                    </div>
+                    <strong>{entry.data.readingMinutes} min <b aria-hidden="true">↗</b></strong>
+                  </a>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      )}
+    </main>
+    <SiteFooter />
+  </div>
+</BaseLayout>
+
+<style>
+  .blog-header {
+    position: relative;
+    display: grid;
+    min-height: min(690px, calc(100svh - 76px));
+    overflow: hidden;
+    isolation: isolate;
+    border-bottom: 1px solid var(--line);
+    background:
+      linear-gradient(rgba(167, 173, 174, .045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(167, 173, 174, .045) 1px, transparent 1px),
+      var(--ink);
+    background-size: 42px 42px;
+  }
+
+  .blog-header-copy {
+    position: relative;
+    z-index: 2;
+    align-self: center;
+    width: min(100%, 940px);
+    padding: 74px var(--page-pad);
+    pointer-events: none;
+  }
+  .blog-header h1 { margin: 0; font-size: clamp(4.8rem, min(12vw, 16vh), 12rem); line-height: .78; letter-spacing: -.085em; }
+  .blog-header-meta { position: absolute; right: clamp(32px, 5vw, 80px); bottom: 32px; z-index: 2; display: grid; grid-template-columns: repeat(2, auto); gap: 34px; margin: 0; }
+  .blog-header-meta div { display: grid; gap: 5px; }
+  .blog-header-meta dt,
+  .blog-header-meta dd { margin: 0; font: 650 .56rem/1.4 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+  .blog-header-meta dt { color: var(--muted); }
+  .blog-feed { border-bottom: 1px solid var(--line); }
+  .blog-feed ol { margin: 0; padding: 0; list-style: none; }
+  .blog-feed li + li { border-top: 1px solid var(--line); }
+  .blog-feed li > a { display: grid; min-height: 250px; grid-template-columns: 50px 1fr auto; gap: 30px; align-items: center; padding: 34px clamp(34px, 5vw, 74px); text-decoration: none; }
+  .blog-feed li > a:hover { background: var(--ink-raised); }
+  .blog-feed li > a > span { align-self: start; color: var(--signal); font: 700 .6rem/1 var(--mono); }
+  .blog-feed time,
+  .blog-feed strong { color: var(--muted); font: 650 .57rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+  .blog-feed h3 { margin: 18px 0; font-size: clamp(2rem, 3.7vw, 4rem); line-height: .94; letter-spacing: -.045em; }
+  .blog-feed li p { max-width: 620px; margin: 0; color: var(--muted); line-height: 1.65; }
+  .blog-feed strong b { margin-left: 12px; color: var(--signal); }
+  @media (max-width: 760px) {
+    .blog-header { min-height: min(650px, calc(100svh - 68px)); }
+    .blog-header-copy { padding: 92px 24px 70px; }
+    .blog-header h1 { font-size: clamp(3.8rem, 21vw, 6.5rem); }
+    .blog-header-meta { right: 20px; bottom: 18px; gap: 24px; }
+    .blog-header-meta div:last-child { display: none; }
+    .blog-feed li > a { min-height: 300px; grid-template-columns: 36px 1fr; gap: 18px; padding: 34px 24px; }
+    .blog-feed strong { grid-column: 2; }
+  }
+</style>

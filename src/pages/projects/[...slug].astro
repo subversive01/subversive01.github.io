@@ -1,0 +1,58 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import SiteFooter from "../../components/SiteFooter.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("projects", ({ data }) => !data.route);
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+interface Props { entry: CollectionEntry<"projects">; }
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const published = entry.data.publishedAt.toLocaleDateString("en-US", {
+  month: "long", day: "numeric", year: "numeric", timeZone: "UTC"
+});
+---
+
+<BaseLayout
+  title={`${entry.data.title} — SBHC Security`}
+  description={entry.data.description}
+  type="article"
+  publishedAt={entry.data.publishedAt}
+>
+  <div class="research-shell article-shell">
+    <SiteHeader active="projects" />
+    <main>
+      <article class="article">
+        <header class="article-header">
+          <div class="article-kicker"><a href="/projects/">Projects</a><span>/</span><span>{entry.data.status}</span></div>
+          <h1>{entry.data.title}</h1>
+          <p class="article-deck">{entry.data.description}</p>
+          <dl class="article-meta project-meta">
+            <div><dt>Published</dt><dd><time datetime={entry.data.publishedAt.toISOString()}>{published}</time></dd></div>
+            <div><dt>Category</dt><dd>{entry.data.category}</dd></div>
+            <div><dt>Status</dt><dd>{entry.data.status}</dd></div>
+            <div><dt>Reading time</dt><dd>{entry.data.readingMinutes} minutes</dd></div>
+          </dl>
+          {entry.data.github && <a class="button button-primary project-github" href={entry.data.github} target="_blank" rel="noopener noreferrer">View on GitHub <span aria-hidden="true">↗</span></a>}
+        </header>
+        <div class="article-layout project-article-layout">
+          <aside class="article-index"><p>Build log</p><span>Personal project note</span></aside>
+          <div class="prose"><Content /></div>
+        </div>
+        <footer class="article-end"><p>End of project note</p><a href="/projects/">Return to projects <span aria-hidden="true">↗</span></a></footer>
+      </article>
+    </main>
+    <SiteFooter />
+  </div>
+</BaseLayout>
+
+<style>
+  .project-github { margin-top: 36px; }
+  @media (max-width: 760px) {
+    .project-article-layout { display: block; }
+  }
+</style>

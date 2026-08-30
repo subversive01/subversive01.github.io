@@ -1,0 +1,57 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import SiteFooter from "../../components/SiteFooter.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("blog", ({ data }) => !data.draft);
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+interface Props { entry: CollectionEntry<"blog">; }
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const published = entry.data.publishedAt.toLocaleDateString("en-US", {
+  month: "long", day: "numeric", year: "numeric", timeZone: "UTC"
+});
+---
+
+<BaseLayout
+  title={`${entry.data.title} — SBHC Security Blog`}
+  description={entry.data.description}
+  type="article"
+  publishedAt={entry.data.publishedAt}
+>
+  <div class="research-shell article-shell">
+    <SiteHeader active="blog" />
+    <main>
+      <article class="article">
+        <header class="article-header blog-note-header">
+          <div class="article-kicker"><a href="/blog/">Blog</a><span>/</span><span>Personal note</span></div>
+          <h1>{entry.data.title}</h1>
+          <p class="article-deck">{entry.data.description}</p>
+          <dl class="article-meta blog-note-meta">
+            <div><dt>Published</dt><dd><time datetime={entry.data.publishedAt.toISOString()}>{published}</time></dd></div>
+            <div><dt>Reading time</dt><dd>{entry.data.readingMinutes} minutes</dd></div>
+            <div><dt>Tags</dt><dd>{entry.data.tags.length ? entry.data.tags.join(" / ") : "Unfiled"}</dd></div>
+          </dl>
+        </header>
+        <div class="blog-note-body"><div class="prose"><Content /></div></div>
+        <footer class="article-end"><p>End of note</p><a href="/blog/">Return to blog <span aria-hidden="true">↗</span></a></footer>
+      </article>
+    </main>
+    <SiteFooter />
+  </div>
+</BaseLayout>
+
+<style>
+  .blog-note-meta { grid-template-columns: repeat(3, 1fr); }
+  .blog-note-body { display: grid; place-items: center; border-bottom: 1px solid var(--line); }
+  .blog-note-body :global(.prose) { width: min(100%, 1040px); border-left: 0; }
+  @media (max-width: 760px) {
+    .blog-note-meta { grid-template-columns: 1fr; }
+    .blog-note-meta div,
+    .blog-note-meta div + div { padding: 18px 0; border-top: 1px solid var(--line); border-left: 0; }
+  }
+</style>

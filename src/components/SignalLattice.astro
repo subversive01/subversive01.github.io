@@ -1,0 +1,243 @@
+---
+interface Props {
+  class?: string;
+  seed?: number;
+  primaryLabel?: string;
+  secondaryLabel?: string;
+}
+
+const {
+  class: className,
+  seed = 1108,
+  primaryLabel = "Evidence lattice / synthetic",
+  secondaryLabel = "Deterministic loop / no input"
+} = Astro.props;
+---
+
+<figure
+  class:list={["signal-lattice", className]}
+  data-signal-lattice
+  data-signal-seed={seed}
+>
+  <div class="signal-lattice__stage">
+    <div
+      class="signal-lattice__fallback"
+      role="img"
+      aria-label="Static abstract evidence lattice with fixed nodes and one bounded crimson signal path."
+    >
+      <div class="signal-lattice__links" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+      <div class="signal-lattice__nodes" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+      <b class="signal-lattice__focus" aria-hidden="true"></b>
+      <b class="signal-lattice__trace" aria-hidden="true"></b>
+    </div>
+
+    <canvas
+      class="signal-lattice__canvas"
+      data-signal-canvas
+      aria-hidden="true"
+    ></canvas>
+
+    <div class="signal-lattice__hud" aria-hidden="true">
+      <span>{primaryLabel}</span>
+      <span>{secondaryLabel}</span>
+    </div>
+  </div>
+
+  <figcaption class="signal-lattice__caption">
+    Decorative symbolic evidence lattice. Signals follow a fixed local sequence
+    and contain no live or measured study data.
+  </figcaption>
+</figure>
+
+<script>
+  import "../scripts/signal-lattice.ts";
+</script>
+
+<style>
+  .signal-lattice {
+    --lattice-center-x: 72%;
+    --lattice-center-y: 50%;
+    --lattice-radius: min(22cqw, 29cqh, 250px);
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .signal-lattice__stage,
+  .signal-lattice__fallback,
+  .signal-lattice__canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .signal-lattice__stage {
+    overflow: hidden;
+    container-type: size;
+    background:
+      radial-gradient(circle at var(--lattice-center-x) var(--lattice-center-y), rgba(255, 91, 69, 0.075), transparent 18%),
+      radial-gradient(circle at var(--lattice-center-x) var(--lattice-center-y), rgba(244, 242, 238, 0.045), transparent 38%);
+  }
+
+  .signal-lattice__fallback {
+    opacity: 0.88;
+    transition: opacity 360ms ease;
+  }
+
+  .signal-lattice__fallback::before,
+  .signal-lattice__fallback::after {
+    position: absolute;
+    border: 1px solid rgba(216, 216, 210, 0.1);
+    border-radius: 50%;
+    content: "";
+  }
+
+  .signal-lattice__fallback::before {
+    top: var(--lattice-center-y);
+    left: var(--lattice-center-x);
+    width: min(52cqw, 69.6cqh, 600px);
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  .signal-lattice__fallback::after {
+    top: var(--lattice-center-y);
+    left: var(--lattice-center-x);
+    width: min(28.6cqw, 37.7cqh, 325px);
+    aspect-ratio: 1;
+    border-color: rgba(255, 91, 69, 0.16);
+    transform: translate(-50%, -50%);
+  }
+
+  .signal-lattice__links span,
+  .signal-lattice__nodes i,
+  .signal-lattice__focus,
+  .signal-lattice__trace {
+    position: absolute;
+    display: block;
+  }
+
+  .signal-lattice__links span {
+    top: var(--lattice-center-y);
+    left: var(--lattice-center-x);
+    width: var(--lattice-radius);
+    height: 1px;
+    background: rgba(216, 216, 210, 0.13);
+    transform-origin: left center;
+  }
+
+  .signal-lattice__links span:nth-child(1) { transform: rotate(-90deg); }
+  .signal-lattice__links span:nth-child(2) { transform: rotate(-45deg); }
+  .signal-lattice__links span:nth-child(3) { transform: rotate(0deg); }
+  .signal-lattice__links span:nth-child(4) { transform: rotate(45deg); }
+  .signal-lattice__links span:nth-child(5) { transform: rotate(90deg); }
+  .signal-lattice__links span:nth-child(6) { transform: rotate(135deg); }
+  .signal-lattice__links span:nth-child(7) { transform: rotate(180deg); }
+  .signal-lattice__links span:nth-child(8) { transform: rotate(225deg); }
+
+  .signal-lattice__nodes i {
+    width: 5px;
+    height: 5px;
+    border: 1px solid rgba(244, 242, 238, 0.78);
+    border-radius: 50%;
+    background: #090a0a;
+    box-shadow: 0 0 12px rgba(244, 242, 238, 0.14);
+  }
+
+  .signal-lattice__nodes i {
+    top: var(--lattice-center-y);
+    left: var(--lattice-center-x);
+    transform: translate(-50%, -50%) rotate(var(--node-angle, 0deg)) translateX(var(--lattice-radius));
+  }
+
+  .signal-lattice__nodes i:nth-child(1) {
+    width: 7px;
+    height: 7px;
+    border-color: #ff5b45;
+    transform: translate(-50%, -50%);
+  }
+  .signal-lattice__nodes i:nth-child(2) { --node-angle: -90deg; }
+  .signal-lattice__nodes i:nth-child(3) { --node-angle: -45deg; }
+  .signal-lattice__nodes i:nth-child(4) { --node-angle: 0deg; }
+  .signal-lattice__nodes i:nth-child(5) { --node-angle: 45deg; }
+  .signal-lattice__nodes i:nth-child(6) { --node-angle: 90deg; }
+  .signal-lattice__nodes i:nth-child(7) { --node-angle: 135deg; }
+  .signal-lattice__nodes i:nth-child(8) { --node-angle: 180deg; }
+  .signal-lattice__nodes i:nth-child(9) { --node-angle: 225deg; }
+
+  .signal-lattice__focus {
+    top: var(--lattice-center-y);
+    left: var(--lattice-center-x);
+    width: 52px;
+    height: 52px;
+    border: 1px solid rgba(255, 91, 69, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .signal-lattice__trace {
+    top: var(--lattice-center-y);
+    left: var(--lattice-center-x);
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #ff5b45;
+    box-shadow: 0 0 22px rgba(255, 91, 69, 0.72);
+    transform: translate(-50%, -50%);
+  }
+
+  .signal-lattice__canvas {
+    display: block;
+    opacity: 0;
+    transition: opacity 360ms ease;
+  }
+
+  .signal-lattice.is-enhanced .signal-lattice__fallback { opacity: 0; }
+  .signal-lattice.is-enhanced .signal-lattice__canvas { opacity: 0.96; }
+
+  .signal-lattice__hud {
+    position: absolute;
+    inset: 24px 28px auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    color: rgba(216, 216, 210, 0.48);
+    font: 650 0.56rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .signal-lattice__caption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 720px) {
+    .signal-lattice { --lattice-center-x: 70%; }
+    .signal-lattice__hud { inset: 16px 18px auto; }
+    .signal-lattice__hud span:last-child { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .signal-lattice__fallback,
+    .signal-lattice__canvas { transition: none; }
+    .signal-lattice.is-enhanced .signal-lattice__fallback { opacity: 0.88; }
+    .signal-lattice.is-enhanced .signal-lattice__canvas { opacity: 0; }
+  }
+</style>

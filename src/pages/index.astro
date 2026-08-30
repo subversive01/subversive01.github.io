@@ -1,0 +1,35 @@
+---
+import AuthorityField from "../components/AuthorityField.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="SBHC Security — Independent Systems Research"
+  description="Independent security research, software, and visual evidence systems from SBHC Security."
+>
+  <div class="research-shell home-shell">
+    <SiteHeader active="home" />
+    <main>
+      <section class="home-hero" aria-labelledby="home-title">
+        <div class="hero-visual"><AuthorityField /></div>
+        <div class="hero-index" aria-hidden="true"><span>SBHC</span><i></i><span>LA / 001</span></div>
+        <div class="home-hero-copy">
+          <p class="eyebrow">Independent research / Los Angeles</p>
+          <h1 id="home-title">SBHC SECURITY<br /><span>RESEARCH</span></h1>
+          <p>
+            I work across cybersecurity, incident response, and security
+            operations, exploring how emerging systems reshape risk. Here I
+            share independent research, experiments, tools, and field notes
+            spanning software, systems, hardware, and art.
+          </p>
+          <a class="button button-primary" href="/research/">Open the research log <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="hero-stamp" aria-hidden="true"><span>Static</span><strong>SBHC</strong><span>No tracking</span></div>
+      </section>
+
+    </main>
+    <SiteFooter />
+  </div>
+</BaseLayout>

@@ -1,0 +1,61 @@
+---
+import { getCollection } from "astro:content";
+
+/**
+ * Archived Home sections — design reference only.
+ *
+ * This component is intentionally not imported by any rendered page. Its
+ * matching styles remain in global.css so the design can be restored quickly.
+ */
+const [featured] = (await getCollection("research")).sort(
+  (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()
+);
+---
+
+<section class="home-manifesto" aria-labelledby="manifesto-title">
+  <p class="section-label">01 / Practice</p>
+  <h2 id="manifesto-title">Security research<br />with <em>visual consequence.</em></h2>
+  <div>
+    <p>
+      Experimental systems, exact claims, and editorial design belong in the
+      same room. The work is technical. The publication should feel alive.
+    </p>
+    <dl>
+      <div><dt>Focus</dt><dd>Distributed authority</dd></div>
+      <div><dt>Method</dt><dd>Bounded experiments</dd></div>
+      <div><dt>Output</dt><dd>Public evidence notes</dd></div>
+    </dl>
+  </div>
+</section>
+
+{featured && (
+  <section class="home-feature" aria-labelledby="feature-title">
+    <div class="feature-meta">
+      <p class="section-label">02 / Current dossier</p>
+      <dl>
+        <div><dt>Status</dt><dd>{featured.data.status}</dd></div>
+        <div><dt>Version</dt><dd>{featured.data.version}</dd></div>
+        <div><dt>Read</dt><dd>{featured.data.readingMinutes} minutes</dd></div>
+      </dl>
+    </div>
+    <div class="feature-copy">
+      <p>{featured.data.study}</p>
+      <h2 id="feature-title">{featured.data.title}</h2>
+      <p>{featured.data.description}</p>
+      <a class="button button-outline" href={`/research/${featured.id}/`}>Read the note <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="feature-orbit" aria-hidden="true"><i></i><i></i><i></i><b></b></div>
+  </section>
+)}
+
+<section class="home-boundary" aria-labelledby="boundary-title">
+  <div>
+    <p class="section-label">03 / Operating boundary</p>
+    <h2 id="boundary-title">Sharp visuals.<br />Hard limits.</h2>
+  </div>
+  <ol>
+    <li><span>01</span><div><strong>No live attack feeds</strong><p>Visuals use symbolic or curated public data only.</p></div></li>
+    <li><span>02</span><div><strong>No surveillance layer</strong><p>No analytics, ad pixels, cookies, or third-party scripts.</p></div></li>
+    <li><span>03</span><div><strong>No runtime dependency</strong><p>The publication compiles to static files on GitHub Pages.</p></div></li>
+  </ol>
+</section>

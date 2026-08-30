@@ -1,0 +1,169 @@
+---
+interface Props { class?: string; }
+const { class: className } = Astro.props;
+---
+
+<div
+  class:list={["station-visual", className]}
+  role="img"
+  aria-label="Abstract hardware instrument representing the Station 562 ESP32 badge."
+>
+  <div class="station-orbit station-orbit-one"></div>
+  <div class="station-orbit station-orbit-two"></div>
+  <div class="station-frame">
+    <header><span>FIRMWARE / HARDWARE CTF</span><i></i><b>ESP32-C3 / C6</b></header>
+    <div class="station-grid" aria-hidden="true"></div>
+    <div class="station-dish" aria-hidden="true"><i></i><i></i></div>
+    <div class="station-screen">
+      <span>STATION 562</span>
+      <strong>SIGNAL<br />LOCKED</strong>
+      <div><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="station-channel"><span>CH 562</span><i></i><span>TX &gt;&gt;&gt;</span></div>
+    <div class="station-controls" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="station-trace station-trace-one" aria-hidden="true"></div>
+    <div class="station-trace station-trace-two" aria-hidden="true"></div>
+    <footer><span>ESP32-C3 / C6</span><span>V6.3.0</span></footer>
+  </div>
+</div>
+
+<style>
+  .station-visual {
+    position: relative;
+    display: grid;
+    width: 100%;
+    min-height: 360px;
+    place-items: center;
+    overflow: hidden;
+    isolation: isolate;
+    background:
+      radial-gradient(circle at 52% 48%, rgba(98, 34, 146, .34), transparent 38%),
+      linear-gradient(rgba(167, 173, 174, .04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(167, 173, 174, .04) 1px, transparent 1px);
+    background-size: auto, 32px 32px, 32px 32px;
+  }
+
+  .station-orbit {
+    position: absolute;
+    border: 1px solid rgba(244, 242, 238, .09);
+    border-radius: 50%;
+  }
+
+  .station-orbit-one { width: 74%; aspect-ratio: 1; }
+  .station-orbit-two { width: 48%; aspect-ratio: 1; border-color: rgba(255, 91, 69, .16); }
+
+  .station-frame {
+    position: relative;
+    z-index: 1;
+    width: min(76%, 480px);
+    aspect-ratio: 1.35;
+    overflow: hidden;
+    padding: clamp(18px, 4%, 28px);
+    border: 1px solid rgba(244, 242, 238, .32);
+    border-radius: 22px;
+    background: linear-gradient(145deg, rgba(54, 7, 86, .98), rgba(10, 11, 13, .98) 72%);
+    box-shadow: 0 35px 90px rgba(0, 0, 0, .6), 0 0 42px rgba(98, 34, 146, .14);
+    transform: rotate(-2deg);
+  }
+
+  .station-frame::before {
+    position: absolute;
+    inset: 9px;
+    border: 1px solid rgba(244, 242, 238, .06);
+    border-radius: 15px;
+    content: "";
+  }
+
+  .station-frame header,
+  .station-frame footer {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    color: #c5bdcb;
+    font: 700 clamp(.4rem, .8vw, .58rem)/1 var(--mono);
+    letter-spacing: .12em;
+  }
+
+  .station-frame header { gap: 12px; }
+  .station-frame header i { height: 1px; flex: 1; background: rgba(244, 242, 238, .18); }
+  .station-frame header b { color: var(--signal); font-size: 1.25em; }
+  .station-frame footer { position: absolute; right: clamp(18px, 4%, 28px); bottom: clamp(18px, 4%, 28px); left: clamp(18px, 4%, 28px); justify-content: space-between; color: #756d7c; }
+
+  .station-grid {
+    position: absolute;
+    inset: 17% 5% 15%;
+    background:
+      linear-gradient(rgba(198, 179, 211, .045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(198, 179, 211, .045) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .station-dish {
+    position: absolute;
+    top: 25%;
+    left: 10%;
+    width: 30%;
+    aspect-ratio: 1;
+    border: 1px solid rgba(244, 242, 238, .22);
+    border-radius: 50%;
+    transform: rotate(-18deg);
+  }
+
+  .station-dish::before,
+  .station-dish::after { position: absolute; border: 1px solid rgba(244, 242, 238, .15); border-radius: 50%; content: ""; }
+  .station-dish::before { inset: 18%; }
+  .station-dish::after { inset: 38%; border-color: var(--signal); box-shadow: 0 0 18px rgba(255, 91, 69, .55); }
+  .station-dish i:first-child { position: absolute; top: 50%; left: 50%; width: 68%; height: 1px; background: rgba(244, 242, 238, .22); transform: rotate(34deg); transform-origin: left; }
+  .station-dish i:last-child { position: absolute; top: 18%; left: 18%; width: 5px; height: 5px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 14px var(--signal); }
+
+  .station-screen {
+    position: absolute;
+    top: 25%;
+    right: 9%;
+    display: flex;
+    width: 43%;
+    aspect-ratio: 1.48;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 6%;
+    border: 1px solid #3e4e48;
+    background: #08110e;
+    box-shadow: inset 0 0 28px rgba(114, 255, 196, .07);
+    color: #b7ffd9;
+    font-family: var(--mono);
+  }
+
+  .station-screen span { font-size: clamp(.38rem, .75vw, .52rem); letter-spacing: .12em; }
+  .station-screen strong { font-size: clamp(.82rem, 1.65vw, 1.24rem); line-height: .9; letter-spacing: .04em; }
+  .station-screen div { display: flex; gap: 5px; }
+  .station-screen div i { width: 16%; height: 3px; background: #46685a; }
+  .station-screen div i:nth-child(-n + 4) { background: var(--signal); box-shadow: 0 0 9px rgba(255, 91, 69, .55); }
+
+  .station-channel {
+    position: absolute;
+    right: 10%;
+    bottom: 23%;
+    display: flex;
+    width: 42%;
+    align-items: center;
+    gap: 8px;
+    color: #817b85;
+    font: 650 clamp(.34rem, .65vw, .46rem)/1 var(--mono);
+  }
+
+  .station-channel i { height: 1px; flex: 1; background: var(--signal); }
+  .station-controls { position: absolute; bottom: 20%; left: 10%; display: flex; width: 30%; justify-content: space-between; }
+  .station-controls i { width: 17%; aspect-ratio: 1; border: 1px solid rgba(244, 242, 238, .25); border-radius: 50%; }
+  .station-controls i:nth-child(3) { border-color: var(--signal); background: rgba(255, 91, 69, .12); }
+
+  .station-trace { position: absolute; z-index: 0; height: 1px; background: rgba(196, 176, 210, .22); transform-origin: left; }
+  .station-trace::after { position: absolute; top: -2px; right: 0; width: 5px; height: 5px; border-radius: 50%; background: var(--signal); content: ""; }
+  .station-trace-one { top: 18%; left: 15%; width: 34%; transform: rotate(14deg); }
+  .station-trace-two { right: 13%; bottom: 18%; width: 30%; transform: rotate(-12deg); }
+
+  @media (max-width: 760px) {
+    .station-visual { min-height: 420px; }
+    .station-frame { width: min(86%, 430px); }
+  }
+</style>

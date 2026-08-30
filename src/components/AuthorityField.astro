@@ -1,0 +1,223 @@
+---
+interface Props {
+  class?: string;
+  seed?: number;
+}
+
+const { class: className, seed = 562 } = Astro.props;
+
+function mulberry32(initialSeed: number): () => number {
+  let state = initialSeed >>> 0;
+  return () => {
+    state += 0x6d2b79f5;
+    let value = state;
+    value = Math.imul(value ^ (value >>> 15), value | 1);
+    value ^= value + Math.imul(value ^ (value >>> 7), value | 61);
+    return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const random = mulberry32(seed);
+const fallbackParticles = Array.from({ length: 112 }, (_, index) => {
+  const cluster = index % 5;
+  const angle = random() * Math.PI * 2 + cluster * 0.7;
+  const radius = Math.pow(random(), 0.68);
+  const centerX = cluster < 3 ? 66 : 50;
+  const centerY = cluster % 2 === 0 ? 48 : 57;
+  const x = Math.max(5, Math.min(96, centerX + Math.cos(angle) * radius * (31 + cluster * 2)));
+  const y = Math.max(7, Math.min(93, centerY + Math.sin(angle) * radius * (34 - cluster)));
+
+  return {
+    x,
+    y,
+    radius: 0.08 + random() * 0.18,
+    opacity: 0.22 + random() * 0.7
+  };
+});
+---
+
+<figure
+  class:list={["authority-field", className]}
+  data-authority-field
+  data-authority-seed={seed}
+>
+  <div class="authority-field__stage">
+    <svg
+      class="authority-field__fallback"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+      role="img"
+      aria-label="Static abstract field of bounded authority nodes crossed by one crimson evidence trace."
+    >
+      <g class="authority-field__fallback-grid" aria-hidden="true">
+        {Array.from({ length: 9 }, (_, index) => (
+          <path d={`M ${10 + index * 10} 0 V 100`} />
+        ))}
+        {Array.from({ length: 7 }, (_, index) => (
+          <path d={`M 0 ${12.5 + index * 12.5} H 100`} />
+        ))}
+      </g>
+      <g aria-hidden="true">
+        {fallbackParticles.map((particle) => (
+          <circle
+            cx={particle.x}
+            cy={particle.y}
+            r={particle.radius}
+            opacity={particle.opacity}
+          />
+        ))}
+      </g>
+      <path
+        class="authority-field__fallback-trace authority-field__fallback-trace--glow"
+        d="M 26 76 C 39 63, 48 68, 55 51 S 72 34, 87 18"
+        aria-hidden="true"
+      />
+      <path
+        class="authority-field__fallback-trace"
+        d="M 26 76 C 39 63, 48 68, 55 51 S 72 34, 87 18"
+        aria-hidden="true"
+      />
+    </svg>
+
+    <canvas
+      class="authority-field__canvas"
+      data-authority-canvas
+      aria-hidden="true"
+    ></canvas>
+
+    <div class="authority-field__hud" aria-hidden="true">
+      <span>Cybersecurity / field notes</span>
+      <span>Systems · hardware · art</span>
+    </div>
+  </div>
+
+  <figcaption class="authority-field__caption">
+    Decorative symbolic authority field. The animation is local, deterministic,
+    and contains no live or measured study data.
+  </figcaption>
+</figure>
+
+<script>
+  import "../scripts/authority-field.ts";
+</script>
+
+<style>
+  .authority-field {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .authority-field__stage,
+  .authority-field__fallback,
+  .authority-field__canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .authority-field__stage {
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 72% 48%, rgba(255, 91, 69, 0.07), transparent 24%),
+      radial-gradient(circle at 54% 52%, rgba(244, 242, 238, 0.045), transparent 42%);
+  }
+
+  .authority-field__fallback {
+    display: block;
+    color: #f4f2ee;
+    opacity: 0.72;
+    transition: opacity 420ms ease;
+  }
+
+  .authority-field__fallback circle {
+    fill: currentColor;
+  }
+
+  .authority-field__fallback-grid path {
+    fill: none;
+    stroke: rgba(146, 153, 154, 0.08);
+    stroke-width: 0.06;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .authority-field__fallback-trace {
+    fill: none;
+    stroke: #ff5b45;
+    stroke-linecap: round;
+    stroke-width: 0.16;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .authority-field__fallback-trace--glow {
+    opacity: 0.22;
+    stroke-width: 1.1;
+  }
+
+  .authority-field__canvas {
+    display: block;
+    opacity: 0;
+    transition: opacity 420ms ease;
+  }
+
+  .authority-field.is-enhanced .authority-field__fallback {
+    opacity: 0;
+  }
+
+  .authority-field.is-enhanced .authority-field__canvas {
+    opacity: 0.92;
+  }
+
+  .authority-field__hud {
+    position: absolute;
+    inset: 24px 28px auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    color: rgba(216, 216, 210, 0.48);
+    font: 650 0.56rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .authority-field__caption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 720px) {
+    .authority-field__hud {
+      inset: 16px 18px auto;
+    }
+
+    .authority-field__hud span:last-child {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .authority-field__fallback,
+    .authority-field__canvas {
+      transition: none;
+    }
+
+    .authority-field.is-enhanced .authority-field__fallback {
+      opacity: 0.72;
+    }
+
+    .authority-field.is-enhanced .authority-field__canvas {
+      opacity: 0;
+    }
+  }
+</style>

@@ -1,0 +1,85 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import SiteFooter from "../../components/SiteFooter.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import TheaterMap from "../../components/TheaterMap.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("research", ({ data }) => !data.route);
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+interface Props { entry: CollectionEntry<"research">; }
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const sections = headings.filter((heading) => heading.depth === 2);
+const published = entry.data.publishedAt.toLocaleDateString("en-US", {
+  month: "long", day: "numeric", year: "numeric", timeZone: "UTC"
+});
+---
+
+<BaseLayout
+  title={`${entry.data.title} — SBHC Security`}
+  description={entry.data.description}
+  type="article"
+  publishedAt={entry.data.publishedAt}
+>
+  <div class="research-shell article-shell">
+    <SiteHeader active="research" />
+    <main>
+      <article class="article">
+        <header class="article-header">
+          <div class="article-kicker"><a href="/research/">Research log</a><span>/</span><span>{entry.data.status.replaceAll("-", " ")}</span></div>
+          <h1>{entry.data.title}</h1>
+          <p class="article-deck">{entry.data.description}</p>
+          <dl class="article-meta">
+            <div><dt>Published</dt><dd><time datetime={entry.data.publishedAt.toISOString()}>{published}</time></dd></div>
+            <div><dt>Study</dt><dd>{entry.data.study}</dd></div>
+            <div><dt>Version</dt><dd>{entry.data.version}</dd></div>
+            <div><dt>Reading time</dt><dd>{entry.data.readingMinutes} minutes</dd></div>
+          </dl>
+        </header>
+
+        {entry.data.demo && <aside class="concept-notice" aria-label="Concept data notice"><span>Concept only</span><strong>Illustrative mock data — not a scientific result or live feed.</strong></aside>}
+
+        <section class="article-brief" aria-labelledby="article-brief-title">
+          <header>
+            <p class="section-label">Research note / Start here</p>
+            <h2 id="article-brief-title">At a glance</h2>
+          </header>
+          <dl>
+            <div><dt>Question</dt><dd>{entry.data.question}</dd></div>
+            <div><dt>Status</dt><dd>{entry.data.disposition}</dd></div>
+            <div><dt>Scope</dt><dd>{entry.data.scope}</dd></div>
+            <div><dt>Key takeaway</dt><dd>{entry.data.takeaway}</dd></div>
+          </dl>
+        </section>
+
+        <div class="article-layout" id="research-note">
+          <nav class="article-index" aria-labelledby="article-index-title">
+            <p id="article-index-title">On this page</p>
+            <span>{sections.length} sections / {entry.data.readingMinutes} min</span>
+            <ol>{sections.map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol>
+          </nav>
+          <details class="article-mobile-index">
+            <summary><span>On this page</span><b>{sections.length} sections</b></summary>
+            <nav aria-label="Article sections">
+              <ol>{sections.map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol>
+            </nav>
+          </details>
+          <div class="prose"><Content /></div>
+        </div>
+
+        {entry.data.visual === "theater-map" && (
+          <section class="article-visual" id="visual-plate" aria-labelledby="article-visual-title">
+            <div><p class="section-label">Visual plate / 001</p><h2 id="article-visual-title">Symbolic authority theater</h2></div>
+            <TheaterMap />
+          </section>
+        )}
+        <footer class="article-end"><p>End of research note / {entry.data.version}</p><a href="/research/">Return to research log <span aria-hidden="true">↗</span></a></footer>
+      </article>
+    </main>
+    <SiteFooter />
+  </div>
+</BaseLayout>
