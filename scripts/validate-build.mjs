@@ -138,6 +138,21 @@ for (const file of htmlFiles) {
   if (!html.includes('rel="sitemap" type="application/xml" href="/sitemap.xml"')) {
     failures.push(`${name}: missing sitemap discovery link`);
   }
+  for (const metadata of [
+    'name="description"',
+    'name="author" content="Mario Oliva"',
+    'property="og:locale" content="en_US"',
+    'property="og:title"',
+    'property="og:description"',
+    'property="og:url"',
+    'property="og:image"',
+    'property="og:image:alt"',
+    'name="twitter:card" content="summary_large_image"',
+    'name="twitter:image:alt"',
+    'rel="canonical"'
+  ]) {
+    if (!html.includes(metadata)) failures.push(`${name}: missing discoverability metadata ${metadata}`);
+  }
   if (/<(?:form|iframe|object|embed)\b/i.test(html)) {
     failures.push(`${name}: forbidden active/embed element found`);
   }
@@ -180,6 +195,15 @@ for (const path of ["/", "/research/", "/research/daa/", "/projects/", "/badge/"
   const url = `https://sbhcsecurity.com${path}`;
   if (!sitemap.includes(`<loc>${url}</loc>`)) failures.push(`sitemap is missing: ${url}`);
 }
+if (!sitemap.includes("<lastmod>2026-08-31</lastmod>")) {
+  failures.push("sitemap must expose the latest site update date");
+}
+for (const imageMarker of [
+  'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"',
+  "<image:loc>https://sbhcsecurity.com/assets/blog/research-log-og.png</image:loc>"
+]) {
+  if (!sitemap.includes(imageMarker)) failures.push(`DAA sitemap image metadata is missing: ${imageMarker}`);
+}
 
 for (const file of scriptFiles) {
   const name = relative(dist, file);
@@ -209,6 +233,23 @@ const badgeHtml = existsSync(join(dist, "badge/index.html"))
 const projectsHtml = existsSync(join(dist, "projects/index.html"))
   ? readFileSync(join(dist, "projects/index.html"), "utf8")
   : "";
+for (const metadata of [
+  '<title>Distributed Agentic Attacks (DAA) — Mario Oliva</title>',
+  'name="citation_title" content="Distributed Agentic Attacks: A Proposed Threat Model for Large-Scale Distributed Offensive Agency"',
+  'name="citation_author" content="Mario Oliva"',
+  'name="citation_publication_date" content="2026/08/28"',
+  'name="citation_doi" content="10.5281/zenodo.22150935"',
+  'name="citation_technical_report_number" content="Publication Paper v6.4.3"',
+  'name="citation_abstract_html_url" content="https://sbhcsecurity.com/research/daa/"',
+  'itemscope itemtype="https://schema.org/Article"',
+  'itemprop="additionalType" content="https://schema.org/ScholarlyArticle"',
+  'itemprop="author" itemscope itemtype="https://schema.org/Person"',
+  'itemprop="articleBody"',
+  'itemprop="identifier" content="https://doi.org/10.5281/zenodo.22150935"',
+  'itemprop="isAccessibleForFree" content="true"'
+]) {
+  if (!daaHtml.includes(metadata)) failures.push(`DAA scholarly metadata is missing: ${metadata}`);
+}
 for (const label of [
   "Decision authority / distributed loci",
   "Field evidence / bounded studies",

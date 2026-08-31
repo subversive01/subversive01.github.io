@@ -13,17 +13,44 @@ const { Content, headings } = await render(article);
 const { Content: References } = await render(references);
 const sections = headings.filter((heading) => heading.depth === 2);
 const publishedAt = new Date("2026-08-28T00:00:00.000Z");
+const canonicalUrl = new URL("/research/daa/", Astro.site);
+const socialImage = new URL("/assets/blog/research-log-og.png", Astro.site);
+const publicationTitle = "Distributed Agentic Attacks: A Proposed Threat Model for Large-Scale Distributed Offensive Agency";
+const publicationDescription = "Read Mario Oliva's white paper proposing Distributed Agentic Attacks (DAA), with OpenAI/Hugging Face field evidence, controlled studies, and stated limitations.";
+const publicationDoi = "10.5281/zenodo.22150935";
 ---
 
 <BaseLayout
-  title="Distributed Agentic Attacks — SBHC Security Research"
-  description="A proposed threat model for large-scale distributed offensive agency, with field evidence, controlled experiments, limitations, and reproducibility record."
+  title="Distributed Agentic Attacks (DAA) — Mario Oliva"
+  description={publicationDescription}
+  imageAlt="Distributed Agentic Attacks by Mario Oliva — a proposed AI threat model"
   type="article"
   publishedAt={publishedAt}
+  author="Mario Oliva"
+  articleSection="Cybersecurity research"
+  tags={["Distributed Agentic Attacks", "agentic AI security", "multi-agent systems", "cybersecurity", "incident response"]}
+  scholarly={{
+    title: publicationTitle,
+    doi: publicationDoi,
+    publicationDate: publishedAt,
+    institution: "SBHC Security",
+    reportNumber: "Publication Paper v6.4.3"
+  }}
 >
   <div class="research-shell daa-shell">
     <SiteHeader active="research" />
-    <main>
+    <main itemscope itemtype="https://schema.org/Article" itemid={canonicalUrl.toString()}>
+      <meta itemprop="name" content={publicationTitle} />
+      <meta itemprop="additionalType" content="https://schema.org/ScholarlyArticle" />
+      <meta itemprop="description" content={publicationDescription} />
+      <meta itemprop="datePublished" content={publishedAt.toISOString()} />
+      <meta itemprop="dateModified" content={publishedAt.toISOString()} />
+      <meta itemprop="inLanguage" content="en" />
+      <meta itemprop="identifier" content={`https://doi.org/${publicationDoi}`} />
+      <meta itemprop="isAccessibleForFree" content="true" />
+      <link itemprop="url mainEntityOfPage" href={canonicalUrl} />
+      <link itemprop="image" href={socialImage} />
+      <link itemprop="sameAs" href={`https://doi.org/${publicationDoi}`} />
       <header class="daa-hero" aria-labelledby="daa-title">
         <SignalLattice
           seed={4764}
@@ -32,16 +59,19 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
         />
         <div class="daa-hero-copy">
           <p class="eyebrow">Publication page / August 2026</p>
-          <h1 id="daa-title">
+          <h1 id="daa-title" itemprop="headline">
             <span class="daa-title-word">Distributed</span>
             <span class="daa-title-row"><span class="daa-title-outline">Agentic</span><span class="daa-title-word">Attacks</span></span>
           </h1>
-          <p class="daa-paper-title">A Proposed Threat Model for Large-Scale Distributed Offensive Agency</p>
+          <p class="daa-paper-title" itemprop="alternativeHeadline">A Proposed Threat Model for Large-Scale Distributed Offensive Agency</p>
           <p class="daa-hook">What happens when <strong>consequential attack decisions are distributed across many AI agents?</strong></p>
           <a class="button button-primary" href="#abstract">Read the research <span aria-hidden="true">↓</span></a>
         </div>
         <dl class="daa-hero-meta" aria-label="Publication details">
-          <div><dt>Author</dt><dd>Mario Oliva</dd></div>
+          <div>
+            <dt>Author</dt>
+            <dd itemprop="author" itemscope itemtype="https://schema.org/Person"><span itemprop="name">Mario Oliva</span></dd>
+          </div>
           <div><dt>Version</dt><dd>Publication Paper v6.4.3</dd></div>
           <div><dt>Status</dt><dd>Preprint / not peer reviewed</dd></div>
           <div><dt>Reading time</dt><dd>48 minutes</dd></div>
@@ -88,7 +118,7 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
             </nav>
           </details>
 
-          <div class="daa-prose">
+          <div class="daa-prose" itemprop="articleBody">
             <Content />
           </div>
         </div>
@@ -112,7 +142,7 @@ const publishedAt = new Date("2026-08-28T00:00:00.000Z");
         </header>
         <ol>
           <li>
-            <a href="https://zenodo.org/records/22150935">
+            <a href="https://zenodo.org/records/22150935" itemprop="sameAs">
               <span>01</span>
               <span>
                 <small>Publication paper / v6.4.3</small>
