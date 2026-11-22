@@ -30,9 +30,8 @@ const published = entry.data.publishedAt.toLocaleDateString("en-US", {
         <header class="article-header blog-note-header">
           <div class="article-kicker"><a href="/blog/">Blog</a><span>/</span><span>Personal note</span></div>
           <h1>{entry.data.title}</h1>
-          <p class="article-deck">{entry.data.description}</p>
           <dl class="article-meta blog-note-meta">
-            <div><dt>Published</dt><dd><time datetime={entry.data.publishedAt.toISOString()}>{published}</time></dd></div>
+            <div><dt>Published</dt><dd><time datetime={entry.data.publishedAt.toISOString()}>{published}</time>{entry.data.author && <span class="blog-byline">Author: <strong>{entry.data.author}</strong></span>}</dd></div>
             <div><dt>Reading time</dt><dd>{entry.data.readingMinutes} minutes</dd></div>
             <div><dt>Tags</dt><dd>{entry.data.tags.length ? entry.data.tags.join(" / ") : "Unfiled"}</dd></div>
           </dl>
@@ -48,7 +47,29 @@ const published = entry.data.publishedAt.toLocaleDateString("en-US", {
 <style>
   .blog-note-meta { grid-template-columns: repeat(3, 1fr); }
   .blog-note-body { display: grid; place-items: center; border-bottom: 1px solid var(--line); }
-  .blog-note-body :global(.prose) { width: min(100%, 1040px); border-left: 0; }
+  .article-shell { --blog-gutter: clamp(16px, 4vw, 64px); }
+  .article-header, .article-end { padding-inline: var(--blog-gutter); }
+  .blog-byline { display: block; margin-top: .55rem; }
+  .blog-byline strong { color: var(--signal); font-weight: inherit; }
+  .blog-note-body :global(.prose) {
+    box-sizing: border-box;
+    width: min(100%, 1440px);
+    padding-inline: var(--blog-gutter);
+    border-left: 0;
+  }
+  .blog-note-body :global(.prose > *) { max-width: none; }
+  .blog-note-body :global(.prose a) { overflow-wrap: anywhere; }
+  .blog-note-body :global(.prose pre) { overflow-x: auto; }
+  .blog-note-body :global(.prose table) {
+    margin-inline: auto;
+    margin-block-end: 1.25rem;
+    border-collapse: collapse;
+    outline: 1px solid var(--signal-deep);
+    outline-offset: -1px;
+  }
+  .blog-note-body :global(.prose table :is(th, td)) { padding: .45rem .65rem; }
+  .blog-note-body :global(.prose table :is(th, td) + :is(th, td)) { border-left: 1px solid var(--line-soft); }
+  .blog-note-body :global(.prose table tbody :is(th, td)) { border-top: 1px solid var(--line-soft); }
   @media (max-width: 760px) {
     .blog-note-meta { grid-template-columns: 1fr; }
     .blog-note-meta div,
