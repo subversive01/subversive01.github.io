@@ -171,9 +171,9 @@ for (const file of htmlFiles) {
       href === "https://peps.python.org/pep-0659/" ||
       href === "https://github.com/brandtbucher/specialist" ||
       href === "https://v8.dev/blog/javascript-code-coverage" ||
-      href === "https://github.com/subversive01/security-research-notes" ||
-      href === "https://github.com/subversive01/security-research-notes/blob/main/python-did-it-run/didrun.py" ||
-      href === "https://github.com/subversive01/security-research-notes/blob/main/python-did-it-run/TESTED.md"
+      href === "https://github.com/subversive01/security-research-notes-public" ||
+      href === "https://github.com/subversive01/security-research-notes-public/blob/main/python-did-it-run/didrun.py" ||
+      href === "https://github.com/subversive01/security-research-notes-public/blob/main/python-did-it-run/TESTED.md"
     ) continue;
     const sourceUrl = new URL(href);
     if (sourceUrl.protocol === "https:" && publicationSourceHosts.has(sourceUrl.hostname)) continue;
