@@ -80,11 +80,9 @@ Read the process before anyone restarts the service. "Once" and "repeatedly" are
 
 ## Downloads and source
 
-GitHub repository access is required for these links.
-
-- [Python script (`didrun.py`)](https://github.com/subversive01/security-research-notes/blob/main/python-did-it-run/didrun.py)
-- [Tested environments and results](https://github.com/subversive01/security-research-notes/blob/main/python-did-it-run/TESTED.md)
-- [GitHub repository](https://github.com/subversive01/security-research-notes)
+- [Python script (`didrun.py`)](https://github.com/subversive01/security-research-notes-public/blob/main/python-did-it-run/didrun.py)
+- [Tested environments and results](https://github.com/subversive01/security-research-notes-public/blob/main/python-did-it-run/TESTED.md)
+- [GitHub repository](https://github.com/subversive01/security-research-notes-public)
 
 ## Prior work
 
