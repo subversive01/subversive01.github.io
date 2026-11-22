@@ -167,7 +167,9 @@ for (const file of htmlFiles) {
     if (
       href.startsWith("https://sbhcsecurity.com") ||
       href === "https://github.com/subversive01/station562-badge" ||
-      href === "https://github.com/subversive01/DAA-experimental-evaluation"
+      href === "https://github.com/subversive01/DAA-experimental-evaluation" ||
+      href === "https://peps.python.org/pep-0659/" ||
+      href === "https://github.com/brandtbucher/specialist"
     ) continue;
     const sourceUrl = new URL(href);
     if (sourceUrl.protocol === "https:" && publicationSourceHosts.has(sourceUrl.hostname)) continue;
