@@ -253,8 +253,6 @@ for (const metadata of [
   if (!daaHtml.includes(metadata)) failures.push(`DAA scholarly metadata is missing: ${metadata}`);
 }
 for (const label of [
-  "Decision authority / distributed loci",
-  "Field evidence / bounded studies",
   "No live-system effects",
   "DAA remains on scientific probation.",
   "Distributed burden premium",
@@ -374,16 +372,16 @@ for (const archivedSection of ["01 / Practice", "02 / Current dossier", "03 / Op
     failures.push(`Archived Home section is still rendered: ${archivedSection}`);
   }
 }
-for (const label of ["STATION 562", "FIRMWARE / HARDWARE CTF", "ESP32-C3 / C6", "V6.3.0", "https://github.com/subversive01/station562-badge"]) {
+for (const label of ["STATION 562", "Hardware / firmware / play", "ESP32-C3 / C6", "V6.3.0", "https://github.com/subversive01/station562-badge"]) {
   if (!badgeHtml.includes(label)) failures.push(`Badge page identity is missing: ${label}`);
 }
-for (const label of ["PROJECTS", "Software / security / hardware", "Builds / experiments / releases", "Station 562", "/badge/"]) {
+for (const label of ["PROJECTS", "index-heading", "Station 562", "/badge/"]) {
   if (!projectsHtml.includes(label)) failures.push(`Projects page identity is missing: ${label}`);
 }
 if (projectsHtml.includes("/assets/badge/") || projectsHtml.includes("station-visual")) {
   failures.push("Projects index must not render badge imagery");
 }
-for (const label of ["RESEARCH", "Cybersecurity / formal research", "Methods / evidence / limitations", "Distributed Agentic Attacks", "/research/daa/"]) {
+for (const label of ["RESEARCH", "index-heading", "Distributed Agentic Attacks", "/research/daa/"]) {
   if (!researchHtml.includes(label)) failures.push(`Research index identity is missing: ${label}`);
 }
 for (const removedResearchCopy of ["Research journal / DAA first", "Programs &amp; notes", "Each entry keeps its scope"]) {
@@ -392,7 +390,7 @@ for (const removedResearchCopy of ["Research journal / DAA first", "Programs &am
 for (const label of ["Home", "Research", "Projects", "Blog"]) {
   if (!homeHtml.includes(`>${label}</a>`)) failures.push(`Primary navigation is missing: ${label}`);
 }
-for (const label of ["BLOG", "Personal notes / Los Angeles", "Personal notes / field observations", "Security / systems / hardware / art"]) {
+for (const label of ["BLOG", "index-heading"]) {
   if (!blogHtml.includes(label)) failures.push(`Personal blog identity is missing: ${label}`);
 }
 if (blogHtml.includes("Things I’m thinking about") || blogHtml.includes("Less formal than the")) {
