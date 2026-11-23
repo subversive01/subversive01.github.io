@@ -20,6 +20,8 @@ const published = entry.data.publishedAt.toLocaleDateString("en-US", {
 <BaseLayout
   title={`${entry.data.title} — SBHC Security Blog`}
   description={entry.data.description}
+  image={entry.data.shareImage?.src}
+  imageAlt={entry.data.shareImage?.alt}
   type="article"
   publishedAt={entry.data.publishedAt}
 >
