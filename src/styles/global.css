@@ -462,12 +462,12 @@ button:focus-visible {
 .evidence-flow b { color: var(--muted); font: 700 .55rem/1 var(--mono); letter-spacing: .1em; }
 
 /* Article */
-.article-header { padding: clamp(86px, 10vw, 170px) var(--page-pad) clamp(64px, 8vw, 120px); border-bottom: 1px solid var(--line); background: var(--ink); }
-.article-kicker { display: flex; gap: 12px; margin-bottom: 34px; color: var(--muted); font: 700 .62rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+.article-header { padding: clamp(22px, 3vw, 40px) var(--page-pad); border-bottom: 1px solid var(--line); background: var(--ink); }
+.article-kicker { display: flex; gap: 12px; margin-bottom: 16px; color: var(--muted); font: 700 .62rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
 .article-kicker a { color: var(--signal); text-decoration: none; }
-.article-header h1 { max-width: 1220px; margin: 0; font-size: clamp(3.6rem, 7.4vw, 8.4rem); line-height: .88; letter-spacing: -.065em; }
-.article-deck { max-width: 850px; margin: 44px 0 0; color: var(--paper); font-size: clamp(1.2rem, 2vw, 1.8rem); line-height: 1.5; }
-.article-meta { display: grid; grid-template-columns: repeat(4, 1fr); margin: 82px 0 0; border-top: 1px solid var(--line); }
+.article-header h1 { max-width: 1220px; margin: 0; font-size: clamp(2.5rem, 5vw, 5rem); line-height: .95; letter-spacing: -.065em; }
+.article-deck { max-width: 850px; margin: 16px 0 0; color: var(--paper); font-size: clamp(1.2rem, 2vw, 1.8rem); line-height: 1.5; }
+.article-meta { display: grid; grid-template-columns: repeat(4, 1fr); margin: 22px 0 0; border-top: 1px solid var(--line); }
 .article-meta div { padding: 18px 24px 0 0; }
 .article-meta div + div { padding-left: 24px; border-left: 1px solid var(--line); }
 .article-meta dt, .article-meta dd { margin: 0; font: 650 .6rem/1.5 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
@@ -577,7 +577,6 @@ button:focus-visible {
   .research-card footer span { display: none; }
   .evidence-flow li { grid-template-columns: 40px 1fr; }
   .evidence-flow b { display: none; }
-  .article-header { padding: 90px 24px 60px; }
   .article-meta { grid-template-columns: repeat(2, 1fr); gap: 0; }
   .article-meta div:nth-child(3) { padding-left: 0; border-left: 0; }
   .article-meta div { padding-top: 18px; padding-bottom: 18px; border-top: 1px solid var(--line); }

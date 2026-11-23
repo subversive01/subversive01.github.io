@@ -1,6 +1,5 @@
 ---
 import { getCollection } from "astro:content";
-import SignalLattice from "../../components/SignalLattice.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
@@ -20,25 +19,7 @@ const entries = (await getCollection("research")).sort((a, b) => {
   <div class="research-shell research-index-shell">
     <SiteHeader active="research" />
     <main class="research-index-page">
-      <header class="research-index-hero">
-        <SignalLattice
-          seed={1842}
-          primaryLabel="Cybersecurity / formal research"
-          secondaryLabel="Methods / evidence / limitations"
-        />
-        <div class="research-index-copy">
-          <p class="eyebrow">Investigations / Experiments / Evidence</p>
-          <h1>RESEARCH</h1>
-          <p>
-            My formal investigations into cybersecurity, distributed systems,
-            incident response, security operations, and emerging technical risk.
-          </p>
-        </div>
-        <dl class="research-index-meta" aria-label="Research index status">
-          <div><dt>Entries</dt><dd>{String(entries.length).padStart(2, "0")}</dd></div>
-          <div><dt>Format</dt><dd>Research journal</dd></div>
-        </dl>
-      </header>
+      <header class="index-heading"><h1>RESEARCH</h1></header>
 
       <section class="research-entry-index" aria-label="Research entries">
         <div class="research-entries">
@@ -55,7 +36,7 @@ const entries = (await getCollection("research")).sort((a, b) => {
                   <span class="research-number">{String(index + 1).padStart(2, "0")}</span>
                   <div class="research-title">
                     <p>{entry.data.study} / {entry.data.version}</p>
-                    <h3>{entry.data.title}</h3>
+                    <h2>{entry.data.title}</h2>
                   </div>
                   <p class="research-description">{entry.data.description}</p>
                   <div class="research-entry-meta">
@@ -77,66 +58,13 @@ const entries = (await getCollection("research")).sort((a, b) => {
 <style>
   .research-index-shell { min-height: 100svh; }
   .research-index-page { border-bottom: 1px solid var(--line); background: var(--ink); }
-  .research-index-hero {
-    position: relative;
-    display: grid;
-    min-height: min(690px, calc(100svh - 76px));
-    overflow: hidden;
-    isolation: isolate;
-    border-bottom: 1px solid var(--line);
-    background:
-      linear-gradient(rgba(167, 173, 174, .045) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(167, 173, 174, .045) 1px, transparent 1px),
-      var(--ink);
-    background-size: 42px 42px;
-  }
-
-  .research-index-copy {
-    position: relative;
-    z-index: 2;
-    align-self: center;
-    width: min(100%, 980px);
-    padding: 74px var(--page-pad);
-    pointer-events: none;
-  }
-
-  .research-index-hero h1 {
-    margin: 0;
-    font-size: clamp(4.8rem, min(12vw, 16vh), 12rem);
-    line-height: .78;
-    letter-spacing: -.085em;
-  }
-
-  .research-index-copy > p:last-child {
-    max-width: 680px;
-    margin: clamp(30px, 4vh, 44px) 0 0;
-    color: var(--paper);
-    font-size: clamp(1rem, 1.45vw, 1.28rem);
-    line-height: 1.65;
-  }
-
-  .research-index-meta {
-    position: absolute;
-    right: clamp(32px, 5vw, 80px);
-    bottom: 32px;
-    z-index: 2;
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    gap: 34px;
-    margin: 0;
-  }
-
-  .research-index-meta div { display: grid; gap: 5px; }
-  .research-index-meta dt,
-  .research-index-meta dd { margin: 0; font: 650 .56rem/1.4 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
-  .research-index-meta dt { color: var(--muted); }
-
+  .index-heading { padding: clamp(22px, 3vw, 40px) var(--page-pad); border-bottom: 1px solid var(--line); }
+  .index-heading h1 { margin: 0; font-size: clamp(2.5rem, 5vw, 5rem); letter-spacing: -.065em; line-height: .95; }
   .research-entry-index { border-bottom: 1px solid var(--line); }
   .research-entry + .research-entry { border-top: 1px solid var(--line); }
   .research-entry > a {
     position: relative;
     display: grid;
-    min-height: 220px;
     grid-template-columns: 64px minmax(250px, .72fr) minmax(300px, 1fr) 160px 28px;
     gap: clamp(22px, 3vw, 52px);
     align-items: center;
@@ -163,7 +91,7 @@ const entries = (await getCollection("research")).sort((a, b) => {
   .research-entry > a:focus-visible::before { opacity: 1; }
   .research-number { align-self: start; color: var(--signal); font: 700 .6rem/1 var(--mono); }
   .research-title p { margin: 0 0 18px; color: var(--signal); font: 700 .57rem/1.4 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
-  .research-title h3 { margin: 0; font-size: clamp(2.1rem, 3.8vw, 4.6rem); line-height: .9; letter-spacing: -.055em; }
+  .research-title h2 { margin: 0; font-size: clamp(2.1rem, 3.8vw, 4.6rem); line-height: .9; letter-spacing: -.055em; }
   .research-description { max-width: 650px; margin: 0; color: var(--muted); line-height: 1.7; }
   .research-entry-meta { display: grid; gap: 12px; color: var(--muted); font: 650 .56rem/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
   .research-entry-meta span { color: var(--white); }
@@ -177,23 +105,16 @@ const entries = (await getCollection("research")).sort((a, b) => {
   }
 
   @media (max-width: 760px) {
-    .research-index-hero { min-height: min(650px, calc(100svh - 68px)); }
-    .research-index-copy { padding: 92px 24px 70px; }
-    .research-index-hero h1 { font-size: clamp(3.2rem, 18vw, 5rem); }
-    .research-index-copy > p:last-child { max-width: 88%; font-size: .95rem; }
-    .research-index-meta { right: 20px; bottom: 18px; gap: 24px; }
-    .research-index-meta div:last-child { display: none; }
     .research-entry > a {
-      min-height: 380px;
       grid-template-columns: 34px minmax(0, 1fr) 22px;
       grid-template-rows: auto auto auto;
       gap: 20px 14px;
       align-items: start;
-      padding: 38px 24px;
+      padding: 24px;
     }
     .research-number { grid-column: 1; grid-row: 1 / -1; }
     .research-title { grid-column: 2; }
-    .research-title h3 { font-size: clamp(2.45rem, 11.5vw, 4rem); }
+    .research-title h2 { font-size: clamp(2.45rem, 11.5vw, 4rem); }
     .research-description { grid-column: 2 / -1; grid-row: 2; }
     .research-entry-meta { grid-column: 2; grid-row: 3; grid-template-columns: repeat(2, auto); justify-content: start; gap: 22px; }
     .research-entry > a > strong { grid-column: 3; grid-row: 1; }
