@@ -49,6 +49,10 @@ const blog = defineCollection({
     publishedAt: z.coerce.date(),
     updatedAt: z.coerce.date().optional(),
     author: z.string().min(1).max(100).optional(),
+    shareImage: z.object({
+      src: z.string().startsWith("/assets/blog/").endsWith(".png"),
+      alt: z.string().min(1)
+    }).optional(),
     tags: z.array(z.string().min(1).max(40)).max(8).default([]),
     readingMinutes: z.number().int().positive().max(120),
     draft: z.boolean().default(false)

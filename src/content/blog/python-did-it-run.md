@@ -5,6 +5,9 @@ tags: ["Incident response", "Memory forensics", "CPython"]
 readingMinutes: 6
 author: "Mario Oliva"
 description: "Using CPython interpreter state to investigate whether a Python function ran."
+shareImage:
+  src: "/assets/blog/python-did-it-run-og.png"
+  alt: "SBHC Security blog cover reading Did that Python function ever run? Ask the interpreter. CPython memory forensics by Mario Oliva."
 draft: false
 ---
 
