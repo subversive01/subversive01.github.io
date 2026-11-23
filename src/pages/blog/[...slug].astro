@@ -46,19 +46,20 @@ const published = entry.data.publishedAt.toLocaleDateString("en-US", {
 
 <style>
   .blog-note-meta { grid-template-columns: repeat(3, 1fr); }
-  .blog-note-body { display: grid; place-items: center; border-bottom: 1px solid var(--line); }
+  .blog-note-body { border-bottom: 1px solid var(--line); }
   .article-shell { --blog-gutter: clamp(16px, 4vw, 64px); }
   .article-header, .article-end { padding-inline: var(--blog-gutter); }
   .blog-byline { display: block; margin-top: .55rem; }
   .blog-byline strong { color: var(--signal); font-weight: inherit; }
   .blog-note-body :global(.prose) {
     box-sizing: border-box;
-    width: min(100%, 1440px);
+    max-width: 1440px;
+    margin-inline: auto;
+    overflow-wrap: anywhere;
     padding-inline: var(--blog-gutter);
     border-left: 0;
   }
   .blog-note-body :global(.prose > *) { max-width: none; }
-  .blog-note-body :global(.prose a) { overflow-wrap: anywhere; }
   .blog-note-body :global(.prose pre) { overflow-x: auto; }
   .blog-note-body :global(.prose table) {
     margin-inline: auto;
@@ -71,8 +72,21 @@ const published = entry.data.publishedAt.toLocaleDateString("en-US", {
   .blog-note-body :global(.prose table :is(th, td) + :is(th, td)) { border-left: 1px solid var(--line-soft); }
   .blog-note-body :global(.prose table tbody :is(th, td)) { border-top: 1px solid var(--line-soft); }
   @media (max-width: 760px) {
-    .blog-note-meta { grid-template-columns: 1fr; }
+    .blog-note-header h1 { font-size: clamp(2rem, 8vw, 3.5rem); line-height: 1.05; overflow-wrap: anywhere; }
+    .blog-note-meta { grid-template-columns: minmax(0, 1fr); }
     .blog-note-meta div,
-    .blog-note-meta div + div { padding: 18px 0; border-top: 1px solid var(--line); border-left: 0; }
+    .blog-note-meta div + div { padding: 12px 0; border-top: 1px solid var(--line); border-left: 0; }
+    .blog-note-meta div:first-child { border-top: 0; }
+    .blog-note-meta div:last-child { padding-bottom: 0; }
+
+    .blog-note-body :global(.prose) { padding-block: 28px 48px; }
+    .blog-note-body :global(.prose h2) { font-size: clamp(1.7rem, 6vw, 2.5rem); line-height: 1.08; }
+    .blog-note-body :global(.prose table) {
+      width: 100%;
+      table-layout: fixed;
+      font-size: .875rem;
+      line-height: 1.4;
+    }
+    .blog-note-body :global(.prose table :is(th, td)) { padding: .4rem; }
   }
 </style>
